@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+<rect width="500" height="500" fill="#d9e6fb"/>
+<circle cx="250" cy="190" r="85" fill="#9fbbe8"/>
+<path d="M95 465c18-105 78-160 155-160s137 55 155 160" fill="#9fbbe8"/>
+<text x="250" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#274b7a">ROMEO</text>
+</svg>
