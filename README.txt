@@ -1,8 +1,8 @@
-TownSquare placeholder cleanup update
+TownSquare title consistency update
 
 Change:
-- Removes the obsolete sentence from The Apothecary > Photos:
-  "These five placeholders are ready for the real Apothecary gallery images."
+- Updates the footer notice to use the full production title:
+  Romeo & Juliet: A Mojave Reimagining
 
 Upload the CONTENTS of this ZIP to the ROOT of the existing `townsquare` repository.
-Only profiles/apothecary/index.html needs to be replaced.
+This replaces only root index.html.
