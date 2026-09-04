@@ -1,17 +1,12 @@
-# TownSquare starter
+# TownSquare v2
 
-Static prototype for Joshua Tree Shakespeare Company's **Romeo & Juliet**.
+Adds:
+- Functional Posts, About, Friends, Photos, Videos tabs
+- Functional More dropdown with Timeline and Recent Activity
+- Full Apothecary About section
+- Five Apothecary photo placeholders ready for replacement
+- Placeholder Romeo Montague profile
+- Romeo linked from Apothecary's Friends section
+- Apothecary linked from Romeo's Friends section
 
-## Working features
-- Home page links to The Apothecary
-- Posts / About / Friends / Photos profile tabs
-- Photo thumbnails and post photos open in a full-screen lightbox
-- Previous / next arrows and Escape-to-close in photo viewer
-- Comment buttons reveal predetermined comments
-- Responsive desktop/mobile layout
-
-## Decorative only
-Search, Add Friend, Message, Like, Share, Marketplace and Reels do not submit or save anything.
-
-Upload this package at the ROOT of the `townsquare` GitHub repository.
-Replace placeholder SVGs in `/assets` with your own images, or change the file paths in the HTML if using JPG/PNG filenames.
+Upload the CONTENTS of this package to the ROOT of the existing `townsquare` repository and replace existing files when GitHub asks.
