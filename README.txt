@@ -1,12 +1,8 @@
-TownSquare final-pass incremental update
+TownSquare placeholder cleanup update
 
-Changes in this package:
-- Replaces the LOGO placeholder in the top-left navigation of the Apothecary and Romeo pages with the approved TownSquare cactus-t logo.
-- Adds the approved TownSquare logo to the landing page.
-- Adds the JTSC logo to the top-right of the landing-page statement area.
-- Changes the first two landing-page uses of the production title to:
-  Romeo & Juliet: A Mojave Reimagining
-- Uses the lavender photo in the Apothecary's lavender post.
-- Uses the supplied Mojave landscape as the Apothecary cover photo.
+Change:
+- Removes the obsolete sentence from The Apothecary > Photos:
+  "These five placeholders are ready for the real Apothecary gallery images."
 
-Upload the CONTENTS of this package to the ROOT of the existing `townsquare` repository.
+Upload the CONTENTS of this ZIP to the ROOT of the existing `townsquare` repository.
+Only profiles/apothecary/index.html needs to be replaced.
