@@ -1,19 +1,17 @@
-TOWNSQUARE — NEW BASELINE — SEPTEMBER 15, 2026
+TOWNSQUARE — INTERACTIVE COMMENTS BASELINE — SEPTEMBER 15, 2026
 
-Upload EVERYTHING inside this folder to the ROOT of the GitHub `townsquare` repository.
+Upload EVERYTHING inside this ZIP to the ROOT of the GitHub `townsquare` repository.
 
-Included in this baseline:
-- Montague's Auto Repair business page.
-- Original user-supplied crew photograph (not the AI mockup).
-- Clickable photo tags: Mercutio, Romeo, Benvolio — left to right.
-- Business tabs: Posts, About, Photos, Reviews, Tags.
-- Links from the business page to all three character profiles.
+This baseline includes:
+- Montague's Auto Repair business page and original crew photo.
+- Corrected business-page TownSquare header/logo sizing.
+- Comment counts are clickable site-wide.
+- The Comment button opens the thread.
+- Two authored comments remain visible as the preview when available.
+- Clicking the count or "View all" expands the thread to the full displayed comment count.
+- "Hide comments" collapses the additional thread.
 - Romeo's Friends includes Benvolio, Mercutio, and the Apothecary.
-- Apothecary remains off the landing page as an Easter egg.
-- Visible profile comment counts are synchronized to visible rendered comments.
-- Existing profile navigation [hidden] CSS fix is preserved.
-- Existing consolidated TownSquare content is carried forward.
+- Apothecary remains off the landing page.
+- Existing profile tab navigation fix is preserved.
 
-After upload, commit to main and allow GitHub Pages a short time to deploy.
-Business page path:
-https://romeoandjuliet.joshuatreeshakespeare.org/businesses/montagues-auto-repair/
+After GitHub Pages deploys, hard-refresh with Shift+Command+R in Chrome.

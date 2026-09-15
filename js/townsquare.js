@@ -84,3 +84,81 @@ document.addEventListener('DOMContentLoaded',()=>{
    }
  });
 });
+
+
+/* Interactive comment threads: preview two, expand to the full displayed count. */
+document.addEventListener('DOMContentLoaded', () => {
+  const localNames = [
+    'Sam','Gregory','Nurse','Lawrence','Mia G.','Crystal M.','Sariah G.',
+    'Jessica M.','Paco D.','Natalie R.','Jack W.','Lisa D.','Eva T.',
+    'Lauren W.','Booker H.','Kevin H.','Mojave Local','Desert Rat'
+  ];
+  const localReplies = [
+    '😂','This tracks.','Only in Mojave.','I knew somebody was going to say it.',
+    'Absolutely not.','Well, there it is.','You people are exhausting. ❤️',
+    'See you at the shop.','I have questions.','No notes.','This made my day.',
+    'Please behave.','That seems completely reasonable.','I am staying out of this.',
+    'Somebody screenshot this.','Noted. 👀','The desert provides. 🌵','Okay, this is funny.'
+  ];
+
+  document.querySelectorAll('.post, .business-card').forEach((post, postIndex) => {
+    const summary = post.querySelector('.summary');
+    if (!summary) return;
+
+    const countNode = [...summary.querySelectorAll('span,button')].find(el => /\d+\s+comments?/i.test(el.textContent));
+    if (!countNode) return;
+    const match = countNode.textContent.match(/(\d+)\s+comments?/i);
+    if (!match) return;
+    const total = parseInt(match[1], 10);
+
+    let thread = post.querySelector('.comments, .business-comments');
+    if (!thread) {
+      thread = document.createElement('div');
+      thread.className = post.classList.contains('business-card') ? 'business-comments' : 'comments';
+      const actions = post.querySelector('.actions');
+      (actions || summary).insertAdjacentElement('afterend', thread);
+    }
+
+    const existing = thread.querySelectorAll('.comment, .business-comment').length;
+    const needed = Math.max(0, total - existing);
+
+    for (let i = 0; i < needed; i++) {
+      const row = document.createElement('div');
+      row.className = (thread.classList.contains('business-comments') ? 'business-comment ' : 'comment ') + 'thread-extra generated-comment';
+      const name = localNames[(postIndex + i) % localNames.length];
+      const reply = localReplies[(postIndex * 3 + i) % localReplies.length];
+
+      if (thread.classList.contains('business-comments')) {
+        row.innerHTML = '<span class="generated-avatar">' + name.charAt(0) + '</span><div><b>' + name + '</b><p>' + reply + '</p><small>Like · Reply</small></div>';
+      } else {
+        row.innerHTML = '<span class="generated-avatar">' + name.charAt(0) + '</span><div><b>' + name + '</b><p>' + reply + '</p><small>Like · Reply</small></div>';
+      }
+      thread.appendChild(row);
+    }
+
+    // Replace static count text with an accessible clickable control.
+    const countButton = document.createElement('button');
+    countButton.type = 'button';
+    countButton.className = 'comment-count-link';
+    countButton.textContent = total + (total === 1 ? ' comment' : ' comments');
+    countNode.replaceWith(countButton);
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'thread-toggle';
+    toggle.textContent = 'View all ' + total + (total === 1 ? ' comment' : ' comments');
+    thread.appendChild(toggle);
+
+    const setExpanded = (expanded) => {
+      thread.classList.toggle('thread-expanded', expanded);
+      toggle.textContent = expanded ? 'Hide comments' : 'View all ' + total + (total === 1 ? ' comment' : ' comments');
+      countButton.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    };
+
+    countButton.addEventListener('click', () => setExpanded(!thread.classList.contains('thread-expanded')));
+    toggle.addEventListener('click', () => setExpanded(!thread.classList.contains('thread-expanded')));
+
+    const commentAction = [...post.querySelectorAll('.actions button')].find(b => /comment/i.test(b.textContent));
+    if (commentAction) commentAction.addEventListener('click', () => setExpanded(true));
+  });
+});
