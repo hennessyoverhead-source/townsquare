@@ -1,17 +1,12 @@
-TownSquare profile navigation corrective update
+TownSquare final-pass incremental update
 
-Fixes the regression in the September 15 consolidated build where profile tabs
-such as About, Friends, Photos and Videos appeared not to work.
+Changes in this package:
+- Replaces the LOGO placeholder in the top-left navigation of the Apothecary and Romeo pages with the approved TownSquare cactus-t logo.
+- Adds the approved TownSquare logo to the landing page.
+- Adds the JTSC logo to the top-right of the landing-page statement area.
+- Changes the first two landing-page uses of the production title to:
+  Romeo & Juliet: A Mojave Reimagining
+- Uses the lavender photo in the Apothecary's lavender post.
+- Uses the supplied Mojave landscape as the Apothecary cover photo.
 
-Cause:
-The consolidated stylesheet omitted the global [hidden] rule. Layout rules such
-as .content-grid { display:grid } therefore overrode the browser's normal hidden
-behavior, leaving the Posts panel visible even after another tab was selected.
-
-Fix:
-Restores:
-[hidden] { display: none !important; }
-
-Upload the CONTENTS of this ZIP to the ROOT of the existing `townsquare` repository.
-Only css/styles.css is replaced. No profile content, images, search code, or other
-September 15 changes are altered.
+Upload the CONTENTS of this package to the ROOT of the existing `townsquare` repository.

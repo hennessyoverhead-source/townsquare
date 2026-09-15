@@ -66,3 +66,21 @@ document.addEventListener('keydown',e=>{
 // TownSquare profile search
 const townSquareProfiles=[{name:"Romeo Montague",url:"/profiles/romeo-montague/"},{name:"Benvolio",url:"/profiles/benvolio/"},{name:"Mercutio",url:"/profiles/mercutio/"},{name:"The Apothecary",url:"/profiles/apothecary/"}];
 document.querySelectorAll('.search').forEach(input=>{input.addEventListener('keydown',e=>{if(e.key==='Enter'){const q=input.value.trim().toLowerCase();const hit=townSquareProfiles.find(p=>p.name.toLowerCase().includes(q));if(hit){const base=location.hostname.includes('github.io')?'/townsquare':'';location.href=base+hit.url;}}});});
+
+// TownSquare business search augmentation
+document.addEventListener('DOMContentLoaded',()=>{
+ const input=document.querySelector('#site-search');
+ const box=document.querySelector('#search-results');
+ if(!input||!box) return;
+ input.addEventListener('input',()=>{
+   const q=input.value.trim().toLowerCase();
+   if(q && ("montague's auto repair".includes(q) || "montagues auto repair".includes(q) || "auto repair".includes(q))){
+     const a=document.createElement('a');
+     a.href=(location.pathname.includes('/profiles/')?'../../businesses/montagues-auto-repair/':location.pathname.includes('/businesses/')?'../montagues-auto-repair/':'businesses/montagues-auto-repair/');
+     a.textContent="Montague's Auto Repair";
+     a.className='search-result business-search-result';
+     if(!box.textContent.includes("Montague's Auto Repair")) box.appendChild(a);
+     box.hidden=false;
+   }
+ });
+});
