@@ -1,20 +1,16 @@
-TOWNSQUARE SCRUB FIX 09 — MERCUTIO PROFILE + PROPAGATION
+TOWNSQUARE SCRUB FIX 10 — UNIVERSAL TRUE-CIRCLE AVATARS
 
-New supplied profile:
-- mercutio-profile2.jpg
-- Verified dimensions: 768 x 768 (true square)
-- Installed as assets/mercutio-profile.jpg
+Purpose:
+Fix flat-sided profile/avatar rendering on Mercutio and prevent the same issue
+for future character photos.
 
-Propagation:
-- Mercutio's page uses the new square image everywhere it already referenced mercutio-profile.jpg.
-- Romeo retains Mercutio's real avatar in Friends and comments.
-- Benvolio now uses Mercutio's real avatar in Friends and comments (6 placeholder references replaced).
+Changes:
+- Main profile avatar container and image are both forced to true circles.
+- Image fills the circle using object-fit: cover.
+- Small composer/post/comment avatars are also forced circular.
+- No profile HTML, assets, or JavaScript changed.
 
 Preserved:
-- Mercutio cover and gallery image from Fix 08.
-- Benvolio cover/profile/gallery images from Fix 05.
-- Montague's Auto Repair links.
-- Tabs and existing TownSquare JavaScript.
-- Fix 06 blue active-link CSS and Fix 03 header/mobile framing are untouched.
-
-No CSS or JavaScript is included in this patch.
+- Fix 03 universal header/mobile framing.
+- Fix 06 blue active-link styling.
+- Critical [hidden] behavior.

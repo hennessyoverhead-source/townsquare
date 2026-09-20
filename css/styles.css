@@ -204,3 +204,35 @@ body:has(.business-shell) .business-shell{clear:both}
   text-decoration:underline;
   font-weight:700;
 }
+
+
+/* =========================================================
+   SCRUB FIX 10 — UNIVERSAL TRUE-CIRCLE AVATARS
+   Forces photographic avatars to clip cleanly to circles
+   regardless of source-image dimensions or browser rendering.
+   ========================================================= */
+.ts-modern .modern-avatar,
+.ts-modern .modern-avatar img {
+  border-radius:50% !important;
+}
+
+.ts-modern .modern-avatar {
+  overflow:hidden !important;
+  padding:0 !important;
+}
+
+.ts-modern .modern-avatar img {
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+}
+
+/* Small circular avatars in composers, posts and comments. */
+.ts-modern .composer-placeholder img,
+.ts-modern .post header img,
+.ts-modern .comment img {
+  border-radius:50% !important;
+  object-fit:cover !important;
+  overflow:hidden;
+}
