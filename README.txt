@@ -1,17 +1,10 @@
-TOWNSQUARE SCRUB FIX 05 — BENVOLIO PHOTOS
+TOWNSQUARE SCRUB FIX 07 — BENVOLIO AVATAR PROPAGATION
 
-Adds the three supplied Benvolio photographs:
-- benvolio-cover.jpg — wide mural image, used as top cover
-- benvolio-profile.jpg — square portrait, used as profile/avatar
-- benvolio-hanging.jpg — full-height candid, added to Photos
+Updates Romeo's page so Benvolio's friend thumbnail uses the real
+assets/benvolio-profile.jpg added in Fix 05 instead of friend-placeholder.svg.
 
-All three are also represented in Benvolio's Photos section, with remaining slots left as placeholders.
+No CSS or JavaScript changed, so Fix 06 active-link styling remains intact.
 
-Preserves:
-- Fix 04 Montague's Auto Repair link
-- All/About/Posts/Friends/Photos/Videos tabs
-- Existing posts/comments
-- Existing shared CSS and mobile framing (no CSS changed)
-- TownSquare JavaScript
-
-Upload the CONTENTS of this ZIP to the ROOT of the townsquare repository.
+Ongoing TownSquare rule:
+When a real character profile image is introduced, use that image everywhere
+the character appears as an avatar/thumbnail instead of retaining placeholders.
