@@ -1,22 +1,10 @@
-TOWNSQUARE SCRUB FIX 12 — GLOBAL PERSONAL DETAILS ICONS
+TOWNSQUARE SCRUB FIX 13 — GLOBAL ABOUT-TAB ICONS
 
-This supersedes Fix 11 and Fix 11B for the Personal Details icon update.
+Cumulative on Fix 12. Applies the same icon-row details treatment to the
+separate About tab on Romeo, Benvolio, Mercutio, and Apothecary.
 
-UPLOAD THIS ONE PACKAGE. It contains:
-- Romeo profile HTML with icon-based Personal Details
-- Benvolio profile HTML rebuilt from the exact current GitHub file supplied by the user
-- Mercutio profile HTML based on the latest Fix 09 state
-- Apothecary profile HTML with icon-based Personal Details
-- all five TownSquare icon assets
-- the cumulative stylesheet preserving Fix 03, Fix 06, Fix 10 and Fix 11 rules
+Preserves each About Bio plus all existing Fix 12 profile work, photos,
+avatar propagation, garage links, CSS, tabs, and JavaScript.
 
-Verified preservation:
-- Benvolio photos
-- Mercutio photos
-- Mercutio avatar propagation
-- Montague's Auto Repair links
-- profile tabs and TownSquare JavaScript
-- mobile/header framing
-- blue active links
-- circular avatars
-- hidden tab behavior
+Standing rule: universal profile presentation changes are audited across
+every applicable profile and both All/Personal Details and About views.
