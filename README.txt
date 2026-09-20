@@ -1,12 +1,17 @@
-TOWNSQUARE SCRUB FIX 04 — GARAGE LINKS
+TOWNSQUARE SCRUB FIX 05 — BENVOLIO PHOTOS
 
-Adds an active Montague's Auto Repair link to the Personal Details area of:
-- Romeo Montague
-- Benvolio
-- Mercutio
+Adds the three supplied Benvolio photographs:
+- benvolio-cover.jpg — wide mural image, used as top cover
+- benvolio-profile.jpg — square portrait, used as profile/avatar
+- benvolio-hanging.jpg — full-height candid, added to Photos
 
-Business page remains:
-businesses/montagues-auto-repair/index.html
+All three are also represented in Benvolio's Photos section, with remaining slots left as placeholders.
 
-Only the three profile HTML files are changed.
-No CSS or JavaScript is included, so Fix 03's universal desktop/mobile framing remains untouched.
+Preserves:
+- Fix 04 Montague's Auto Repair link
+- All/About/Posts/Friends/Photos/Videos tabs
+- Existing posts/comments
+- Existing shared CSS and mobile framing (no CSS changed)
+- TownSquare JavaScript
+
+Upload the CONTENTS of this ZIP to the ROOT of the townsquare repository.
