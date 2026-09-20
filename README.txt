@@ -1,17 +1,20 @@
-TOWNSQUARE SCRUB FIX 05 — BENVOLIO PHOTOS
+TOWNSQUARE SCRUB FIX 06 — UNIVERSAL ACTIVE LINKS
 
-Adds the three supplied Benvolio photographs:
-- benvolio-cover.jpg — wide mural image, used as top cover
-- benvolio-profile.jpg — square portrait, used as profile/avatar
-- benvolio-hanging.jpg — full-height candid, added to Photos
+Purpose:
+Make clickable navigation visibly clickable across TownSquare's rebuilt profiles/business page.
 
-All three are also represented in Benvolio's Photos section, with remaining slots left as placeholders.
+Changes:
+- Real content links display in Facebook-like blue.
+- Hover underlines active links on desktop.
+- Keyboard focus is visibly outlined.
+- Friend-card names display blue while preserving their card layout.
+- Garage cover-photo character tags remain white-on-dark but are underlined.
+- Applies to working profile/comment links automatically where those comments contain real <a href> links.
 
-Preserves:
-- Fix 04 Montague's Auto Repair link
-- All/About/Posts/Friends/Photos/Videos tabs
-- Existing posts/comments
-- Existing shared CSS and mobile framing (no CSS changed)
-- TownSquare JavaScript
-
-Upload the CONTENTS of this ZIP to the ROOT of the townsquare repository.
+Safety:
+- CSS ONLY.
+- No HTML changed.
+- No JavaScript changed.
+- Existing desktop/mobile framing from Fix 03 retained.
+- Existing [hidden] behavior retained.
+- Does not make nonfunctional decorative Like/Comment/Share controls look like navigation links.

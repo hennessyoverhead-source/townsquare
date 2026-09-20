@@ -154,3 +154,53 @@ body:has(.business-shell) .business-shell{clear:both}
  .ts-modern .modern-actions{display:grid;grid-template-columns:1fr 1fr}
  .ts-modern .modern-tabs{padding-left:4px;padding-right:4px}
 }
+
+
+/* =========================================================
+   SCRUB FIX 06 — UNIVERSAL CLICKABLE-LINK CUES
+   Makes real navigation links visually obvious without
+   styling decorative controls/buttons as links.
+   ========================================================= */
+
+/* Links inside profile/business content, details, friends, posts and comments. */
+.ts-modern main a:not(.modern-friend):not(.friend-card):not(.button):not(.primary-button):not(.secondary-button),
+.ts-modern .comments a,
+.ts-modern .comment a,
+.ts-modern .post a,
+.ts-modern .modern-card p a,
+.ts-modern .modern-card li a {
+  color:#0866ff;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* Make the interaction unmistakable on pointer devices. */
+.ts-modern main a:hover,
+.ts-modern .comments a:hover,
+.ts-modern .comment a:hover,
+.ts-modern .post a:hover {
+  text-decoration:underline;
+}
+
+/* Keyboard accessibility: visible focus on every active content link. */
+.ts-modern main a:focus-visible,
+.ts-modern .comments a:focus-visible,
+.ts-modern .comment a:focus-visible,
+.ts-modern .post a:focus-visible {
+  outline:2px solid #0866ff;
+  outline-offset:2px;
+  border-radius:3px;
+}
+
+/* Friend tiles remain card-like, but their names read as active links. */
+.ts-modern a.modern-friend b,
+.ts-modern a.friend-card span {
+  color:#0866ff;
+}
+
+/* The garage's cover-photo character tags are links too. */
+.ts-modern .business-cover-label a {
+  color:#fff;
+  text-decoration:underline;
+  font-weight:700;
+}
