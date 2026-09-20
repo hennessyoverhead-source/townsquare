@@ -1,16 +1,22 @@
-TOWNSQUARE SCRUB FIX 10 — UNIVERSAL TRUE-CIRCLE AVATARS
+TOWNSQUARE SCRUB FIX 12 — GLOBAL PERSONAL DETAILS ICONS
 
-Purpose:
-Fix flat-sided profile/avatar rendering on Mercutio and prevent the same issue
-for future character photos.
+This supersedes Fix 11 and Fix 11B for the Personal Details icon update.
 
-Changes:
-- Main profile avatar container and image are both forced to true circles.
-- Image fills the circle using object-fit: cover.
-- Small composer/post/comment avatars are also forced circular.
-- No profile HTML, assets, or JavaScript changed.
+UPLOAD THIS ONE PACKAGE. It contains:
+- Romeo profile HTML with icon-based Personal Details
+- Benvolio profile HTML rebuilt from the exact current GitHub file supplied by the user
+- Mercutio profile HTML based on the latest Fix 09 state
+- Apothecary profile HTML with icon-based Personal Details
+- all five TownSquare icon assets
+- the cumulative stylesheet preserving Fix 03, Fix 06, Fix 10 and Fix 11 rules
 
-Preserved:
-- Fix 03 universal header/mobile framing.
-- Fix 06 blue active-link styling.
-- Critical [hidden] behavior.
+Verified preservation:
+- Benvolio photos
+- Mercutio photos
+- Mercutio avatar propagation
+- Montague's Auto Repair links
+- profile tabs and TownSquare JavaScript
+- mobile/header framing
+- blue active links
+- circular avatars
+- hidden tab behavior

@@ -236,3 +236,53 @@ body:has(.business-shell) .business-shell{clear:both}
   object-fit:cover !important;
   overflow:hidden;
 }
+
+
+/* =========================================================
+   SCRUB FIX 11 — UNIVERSAL PERSONAL-DETAILS ICON ROWS
+   Original TownSquare line icons; Facebook-like information
+   hierarchy without copying Facebook's icon artwork.
+   ========================================================= */
+.ts-modern .personal-details-card .detail-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:10px;
+}
+.ts-modern .personal-details-card .detail-row{
+  display:grid;
+  grid-template-columns:30px minmax(0,1fr);
+  gap:10px;
+  align-items:center;
+  min-height:30px;
+}
+.ts-modern .personal-details-card .detail-icon{
+  width:26px;
+  height:26px;
+  display:grid;
+  place-items:center;
+  color:#3f454d;
+}
+.ts-modern .personal-details-card .detail-icon img{
+  width:24px;
+  height:24px;
+  display:block;
+}
+.ts-modern .personal-details-card .detail-copy{
+  min-width:0;
+  line-height:1.3;
+}
+.ts-modern .personal-details-card .detail-copy a{
+  color:#0866ff;
+  text-decoration:none;
+  font-weight:600;
+}
+.ts-modern .personal-details-card .detail-copy a:hover{
+  text-decoration:underline;
+}
+@media(max-width:520px){
+  .ts-modern .personal-details-card .detail-list{gap:10px}
+  .ts-modern .personal-details-card .detail-row{grid-template-columns:28px minmax(0,1fr);gap:8px}
+  .ts-modern .personal-details-card .detail-icon{width:24px;height:24px}
+  .ts-modern .personal-details-card .detail-icon img{width:22px;height:22px}
+}
