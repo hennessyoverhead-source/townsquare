@@ -1,5 +1,12 @@
-TownSquare Scrub Fix 03 — Universal Header/Framing Fix
+TOWNSQUARE SCRUB FIX 04 — GARAGE LINKS
 
-Replace css/styles.css in the repository.
+Adds an active Montague's Auto Repair link to the Personal Details area of:
+- Romeo Montague
+- Benvolio
+- Mercutio
 
-Fixes the oversized TownSquare logo/header seen on all five rebuilt pages and adds explicit desktop/mobile width containment. No HTML, profile content, comments, photos, links, or JavaScript are changed.
+Business page remains:
+businesses/montagues-auto-repair/index.html
+
+Only the three profile HTML files are changed.
+No CSS or JavaScript is included, so Fix 03's universal desktop/mobile framing remains untouched.
