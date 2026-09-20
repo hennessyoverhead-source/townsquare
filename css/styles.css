@@ -57,8 +57,67 @@ body:has(.business-shell) .business-shell{clear:both}
 .generated-avatar{width:34px;height:34px;border-radius:50%;background:#e4e6eb;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#65676b;flex:0 0 34px}
 
 
-/* SCRUB FIX 01: keep sidebar friend cards inside their card frame */
-.content-grid .right .friend-list-large{grid-template-columns:1fr}
-.content-grid .right .friend-list-large a{min-width:0;width:100%}
-.content-grid .right .friend-list-large span{min-width:0;overflow-wrap:anywhere}
-.content-grid .right .friend-list-large img{flex:0 0 56px;width:56px;height:56px}
+/* =========================================================
+   TOWNSQUARE PROFILE OVERHAUL — 2026-09-19
+   Facebook-inspired structure based on user-provided reference screenshots.
+   Namespaced to .ts-modern so legacy landing/business helpers remain safe.
+   ========================================================= */
+.ts-modern{background:#f0f2f5;color:#1c1e21}
+.ts-modern .topbar{position:sticky;top:0;z-index:50}
+.ts-modern .modern-profile-shell{background:#fff;border-bottom:1px solid #dddfe2}
+.ts-modern .modern-profile-shell .cover{max-width:1040px;height:390px;margin:0 auto;border-radius:0 0 10px 10px;overflow:hidden;background:#d8dee8}
+.ts-modern .modern-profile-shell .cover img{width:100%;height:100%;object-fit:cover}
+.ts-modern .modern-profile-head{max-width:990px;margin:0 auto;display:flex;gap:18px;align-items:flex-end;padding:0 12px 18px}
+.ts-modern .modern-avatar{width:150px;height:150px;border-radius:50%;border:5px solid #fff;overflow:hidden;background:#e4e6eb;margin-top:-42px;flex:0 0 150px}
+.ts-modern .modern-avatar img{width:100%;height:100%;object-fit:cover}
+.ts-modern .modern-identity{flex:1;padding-top:12px}
+.ts-modern .modern-identity h1{font-size:32px;margin:0 0 4px}
+.ts-modern .modern-identity p{margin:3px 0;color:#65676b}
+.ts-modern .modern-actions{display:flex;gap:8px;padding-bottom:4px}
+.ts-modern .modern-tabs{max-width:990px;margin:0 auto;display:flex;gap:4px;border-top:1px solid #e4e6eb;padding:4px 8px 0}
+.ts-modern .modern-tabs .tab{background:transparent;border:0;border-radius:6px;padding:16px 15px;font-weight:700;color:#65676b;cursor:pointer}
+.ts-modern .modern-tabs .tab.active{color:#1877f2;border-bottom:3px solid #1877f2;border-radius:0}
+.ts-modern .modern-page{max-width:990px;margin:16px auto;padding:0 8px}
+.ts-modern .modern-grid{display:grid;grid-template-columns:390px minmax(0,1fr);gap:16px;align-items:start}
+.ts-modern .modern-left{display:grid;gap:16px}
+.ts-modern .modern-card{background:#fff;border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.12);padding:14px}
+.ts-modern .modern-card h2{font-size:20px;margin:0 0 10px}
+.ts-modern .modern-card h3{font-size:17px;margin:16px 0 8px}
+.ts-modern .modern-card p{margin:7px 0}
+.ts-modern .see-all{float:right;font-weight:600;color:#1877f2}
+.ts-modern .modern-friends-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ts-modern .modern-friend{min-width:0;color:#1c1e21}
+.ts-modern .modern-friend img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;background:#e4e6eb}
+.ts-modern .modern-friend b,.ts-modern .modern-friend small{display:block;margin-top:4px;line-height:1.15}
+.ts-modern .modern-friend small{color:#65676b;font-size:12px}
+.ts-modern .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border-radius:8px;overflow:hidden}
+.ts-modern .photo-grid img,.ts-modern .photo-placeholder{width:100%;aspect-ratio:1/1;object-fit:cover;background:#e4e6eb}
+.ts-modern .photo-placeholder{display:grid;place-items:center;color:#65676b;font-size:12px;text-align:center;padding:5px}
+.ts-modern .composer-placeholder{display:flex;gap:10px;align-items:center}
+.ts-modern .composer-placeholder img{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#e4e6eb}
+.ts-modern .composer-line{background:#f0f2f5;border-radius:20px;padding:10px 14px;color:#65676b;flex:1}
+.ts-modern .feed{display:grid;gap:16px}
+.ts-modern .post.modern-card{padding:0;overflow:hidden}
+.ts-modern .post.modern-card>header{padding:12px 14px}
+.ts-modern .post.modern-card>p{padding:0 14px}
+.ts-modern .post.modern-card .summary,.ts-modern .post.modern-card .actions,.ts-modern .post.modern-card .comments{margin-left:14px;margin-right:14px}
+.ts-modern .modern-panel[hidden]{display:none!important}
+.ts-modern .modern-panel.single{max-width:990px;margin:16px auto;padding:0 8px}
+.ts-modern .placeholder-banner{display:grid;place-items:center;height:180px;border-radius:8px;background:#e4e6eb;color:#65676b;text-align:center;font-weight:700}
+.ts-modern .business-cover-label{position:absolute;left:18px;bottom:16px;background:rgba(0,0,0,.65);color:#fff;padding:8px 10px;border-radius:7px}
+.ts-modern .cover-wrap{position:relative}
+@media(max-width:800px){
+ .ts-modern .modern-profile-shell .cover{height:250px}
+ .ts-modern .modern-profile-head{align-items:center;flex-wrap:wrap}
+ .ts-modern .modern-avatar{width:120px;height:120px;flex-basis:120px}
+ .ts-modern .modern-identity h1{font-size:26px}
+ .ts-modern .modern-actions{width:100%}
+ .ts-modern .modern-tabs{overflow-x:auto}
+ .ts-modern .modern-grid{grid-template-columns:1fr}
+ .ts-modern .modern-page{max-width:620px}
+}
+@media(max-width:520px){
+ .ts-modern .modern-profile-shell .cover{height:190px}
+ .ts-modern .modern-avatar{width:100px;height:100px;flex-basis:100px;margin-top:-30px}
+ .ts-modern .modern-friends-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}

@@ -1,76 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Montague's Auto Repair | TownSquare</title>
-<link rel="stylesheet" href="../../css/styles.css">
-</head>
-<body>
-<header class="topbar">
-  <a class="brand" href="../../"><img src="../../assets/townsquare-logo.png" alt="TownSquare"></a>
-  <div class="search-wrap"><input id="site-search" type="search" placeholder="Search TownSquare" autocomplete="off"><div id="search-results" class="search-results" hidden></div></div>
-</header>
-<main class="business-shell">
-  <div class="business-cover">
-    <img src="../../assets/montagues-crew.jpg" alt="Mercutio, Romeo and Benvolio at Montague's Auto Repair">
-    <a class="photo-tag tag-mercutio" href="../../profiles/mercutio/">Mercutio</a>
-    <a class="photo-tag tag-romeo" href="../../profiles/romeo-montague/">Romeo</a>
-    <a class="photo-tag tag-benvolio" href="../../profiles/benvolio/">Benvolio</a>
-  </div>
-  <section class="business-head">
-    <div class="business-title-row">
-      <div class="business-title">
-        <h1>Montague's Auto Repair</h1>
-        <p>Automotive Repair Shop · Mojave, CA · 🌐 Public</p>
-        <p><b>Good people keep things moving.</b></p>
-      </div>
-      <div class="business-actions"><button class="primary decorative">＋ Follow</button><button class="decorative">Message</button></div>
-    </div>
-    <nav class="business-tabs" aria-label="Business profile sections">
-      <button class="active" data-biztab="posts">Posts</button>
-      <button data-biztab="about">About</button>
-      <button data-biztab="photos">Photos</button>
-      <button data-biztab="reviews">Reviews</button>
-      <button data-biztab="tags">Tags</button>
-    </nav>
-  </section>
-
-  <div id="biz-posts" class="business-panel">
-    <div class="business-grid">
-      <div>
-        <article class="business-card">
-          <h3>Montague's Auto Repair</h3><small>3 days ago · 🌐</small>
-          <p>Good people keep things moving. Another long day at the shop with the best crew in Mojave. 🔧</p>
-          <img class="business-post-photo" src="../../assets/montagues-crew.jpg" alt="Mercutio, Romeo and Benvolio at the shop">
-          <p class="tag-note">With <a href="../../profiles/mercutio/"><b>Mercutio</b></a>, <a href="../../profiles/romeo-montague/"><b>Romeo Montague</b></a> and <a href="../../profiles/benvolio/"><b>Benvolio</b></a>.</p>
-          <div class="summary"><span>👍 ❤️ 128</span><span>3 comments</span><span>8 shares</span></div>
-          <div class="actions"><button class="decorative">♡ Like</button><button class="decorative">▢ Comment</button><button class="decorative">↗ Share</button></div>
-          <div class="business-comments">
-            <div class="business-comment"><img src="../../assets/friend-placeholder.svg" alt="Mercutio"><div><a href="../../profiles/mercutio/"><b>Mercutio</b></a><p>Best crew in Mojave. 🔧</p></div></div>
-            <div class="business-comment"><img src="../../assets/romeo-profile.svg" alt="Romeo"><div><a href="../../profiles/romeo-montague/"><b>Romeo Montague</b></a><p>Grateful for this crew. 🌵</p></div></div>
-            <div class="business-comment"><img src="../../assets/friend-placeholder.svg" alt="Benvolio"><div><a href="../../profiles/benvolio/"><b>Benvolio</b></a><p>Keep the wheels turning. 👍</p></div></div>
-          </div>
-        </article>
-      </div>
-      <aside>
-        <section class="business-card"><h2>About</h2><p>Montague's Auto Repair is a third-generation family shop in Mojave. Straight talk, dependable work, and a crew that has known each other long enough to know better.</p><p>📍 Mojave, CA<br>🔧 Automotive Repair Shop</p></section>
-        <section class="business-card"><h2>Services</h2><ul class="service-list"><li>Oil changes</li><li>Brake service</li><li>Diagnostics</li><li>Tires & alignments</li><li>General repairs</li></ul></section>
-      </aside>
-    </div>
-  </div>
-
-  <section id="biz-about" class="business-panel business-card" hidden><h2>About Montague's Auto Repair</h2><p>Montague's is the oldest and only family-run auto mechanic shop in town. Romeo Montague is its third-generation owner.</p><p><b>People:</b> <a href="../../profiles/romeo-montague/">Romeo Montague</a>, <a href="../../profiles/mercutio/">Mercutio</a>, <a href="../../profiles/benvolio/">Benvolio</a></p></section>
-  <section id="biz-photos" class="business-panel business-card" hidden><h2>Photos</h2><img class="business-post-photo" src="../../assets/montagues-crew.jpg" alt="Mercutio, Romeo and Benvolio"><p class="tag-note">Mercutio · Romeo · Benvolio</p></section>
-  <section id="biz-reviews" class="business-panel business-card" hidden><h2>Reviews</h2><p>No public reviews yet.</p></section>
-  <section id="biz-tags" class="business-panel business-card" hidden><h2>Tagged</h2><p><a href="../../profiles/mercutio/">Mercutio</a> · <a href="../../profiles/romeo-montague/">Romeo Montague</a> · <a href="../../profiles/benvolio/">Benvolio</a></p></section>
-</main>
-<script src="../../js/townsquare.js"></script>
-<script>
-document.querySelectorAll('[data-biztab]').forEach(btn=>btn.addEventListener('click',()=>{
- document.querySelectorAll('[data-biztab]').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
- document.querySelectorAll('.business-panel').forEach(p=>p.hidden=true);
- document.getElementById('biz-'+btn.dataset.biztab).hidden=false;
-}));
-</script>
-</body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Montague's Auto Repair | TownSquare</title><link rel="stylesheet" href="../../css/styles.css"></head><body class="ts-modern">
+<header class="topbar"><a class="brand" href="../../"><img src="../../assets/townsquare-logo.png" alt="TownSquare"><span class="brand-name">TownSquare</span></a><input class="search" type="search" placeholder="Search TownSquare"><nav><a href="../../">Home</a></nav></header>
+<main><section class="modern-profile-shell"><div class="cover cover-wrap"><img src="../../assets/montagues-crew.jpg" alt="Montague's Auto Repair crew"><div class="business-cover-label">Left: <a href="../../profiles/mercutio/">Mercutio</a> · Center: <a href="../../profiles/romeo-montague/">Romeo</a> · Right: <a href="../../profiles/benvolio/">Benvolio</a></div></div>
+<div class="modern-profile-head"><div class="modern-avatar"><img src="../../assets/montagues-crew.jpg" alt="Montague's Auto Repair"></div><div class="modern-identity"><h1>Montague's Auto Repair</h1><p>Automotive Repair Shop · Mojave, CA · Public</p><p>Good people keep things moving.</p></div><div class="modern-actions"><button class="primary-button decorative">Follow</button><button class="secondary-button decorative">Message</button></div></div>
+<nav class="modern-tabs profile-tabs"><button class="tab active" data-tab="all">All</button><button class="tab" data-tab="about">About</button><button class="tab" data-tab="posts">Posts</button><button class="tab" data-tab="photos">Photos</button><button class="tab" data-tab="videos">Videos</button><button class="tab decorative">More ▾</button></nav></section>
+<section id="all" class="modern-page modern-panel tab-panel"><div class="modern-grid"><aside class="modern-left">
+<article class="modern-card"><h2>About</h2><p>• Family-run Mojave auto repair shop</p><p>• Third-generation owner: <a href="../../profiles/romeo-montague/">Romeo Montague</a></p><p>• Manager: <a href="../../profiles/mercutio/">Mercutio</a></p><p>• Crew: <a href="../../profiles/benvolio/">Benvolio</a></p></article>
+<article class="modern-card"><h2>Photos</h2><div class="photo-grid"><img src="../../assets/montagues-crew.jpg" alt="Montague's crew"><div class="photo-placeholder">Photo placeholder</div><div class="photo-placeholder">Photo placeholder</div><div class="photo-placeholder">Photo placeholder</div><div class="photo-placeholder">Photo placeholder</div><div class="photo-placeholder">Photo placeholder</div></div></article>
+</aside><section class="feed"><article class="modern-card"><h2>Montague's Auto Repair</h2><p>At the shop with Mercutio, Romeo, and Benvolio.</p><img src="../../assets/montagues-crew.jpg" alt="Montague's Auto Repair crew" style="width:100%;border-radius:8px"><div class="actions"><button class="decorative">♡ Like</button><button class="decorative">▢ Comment</button><button class="decorative">↗ Share</button></div></article></section></div></section>
+<section id="about" class="modern-panel single tab-panel" hidden><article class="modern-card"><h2>About Montague's Auto Repair</h2><p>Family-run automotive repair shop in Mojave. Third-generation owner Romeo Montague.</p></article></section>
+<section id="posts" class="modern-panel single tab-panel" hidden><article class="modern-card"><h2>Posts</h2><p>Garage posts will appear here.</p></article></section>
+<section id="photos" class="modern-panel single tab-panel" hidden><article class="modern-card"><h2>Photos</h2><div class="photo-grid"><img src="../../assets/montagues-crew.jpg" alt="Montague's crew"><div class="photo-placeholder">Photo placeholder</div><div class="photo-placeholder">Photo placeholder</div></div></article></section>
+<section id="videos" class="modern-panel single tab-panel" hidden><article class="modern-card"><h2>Videos</h2><div class="placeholder-banner">Video placeholder</div></article></section>
+</main><footer class="site-footer">TownSquare © 2026 · <i>Romeo &amp; Juliet: A Mojave Reimagining</i>.</footer><script src="../../js/townsquare.js"></script></body></html>
