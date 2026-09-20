@@ -1,17 +1,20 @@
-TOWNSQUARE SCRUB FIX 08 — MERCUTIO PHOTOS + AVATAR PROPAGATION
+TOWNSQUARE SCRUB FIX 09 — MERCUTIO PROFILE + PROPAGATION
 
-Images:
-- Page-Photo.jpg -> assets/mercutio-cover.jpg (cover)
-- mercutio-profile.jpg -> assets/mercutio-profile.jpg (profile/avatar)
-- mercutio01.jpg -> assets/mercutio-gallery-01.jpg (gallery only)
+New supplied profile:
+- mercutio-profile2.jpg
+- Verified dimensions: 768 x 768 (true square)
+- Installed as assets/mercutio-profile.jpg
 
 Propagation:
-- Mercutio real profile photo replaces Mercutio placeholders on Romeo's Friends cards and comments.
-- Mercutio's own composer/posts/reply avatar use the real profile photo.
-- Benvolio's already-approved real profile photo replaces Benvolio placeholders on Mercutio's page.
+- Mercutio's page uses the new square image everywhere it already referenced mercutio-profile.jpg.
+- Romeo retains Mercutio's real avatar in Friends and comments.
+- Benvolio now uses Mercutio's real avatar in Friends and comments (6 placeholder references replaced).
 
-Safety:
-- Romeo page was based on the exact current GitHub HTML supplied by the user.
-- Mercutio page preserves the Montague's Auto Repair link.
-- No CSS included, so Fix 06 active-link styling and Fix 03 mobile/header framing are untouched.
-- No JavaScript changed.
+Preserved:
+- Mercutio cover and gallery image from Fix 08.
+- Benvolio cover/profile/gallery images from Fix 05.
+- Montague's Auto Repair links.
+- Tabs and existing TownSquare JavaScript.
+- Fix 06 blue active-link CSS and Fix 03 header/mobile framing are untouched.
+
+No CSS or JavaScript is included in this patch.
