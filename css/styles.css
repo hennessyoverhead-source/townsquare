@@ -55,3 +55,10 @@ body:has(.business-shell) .business-shell{clear:both}
 .thread-toggle:hover{text-decoration:underline}
 .generated-comment>div{background:#f0f2f5;border-radius:18px;padding:8px 12px}
 .generated-avatar{width:34px;height:34px;border-radius:50%;background:#e4e6eb;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#65676b;flex:0 0 34px}
+
+
+/* SCRUB FIX 01: keep sidebar friend cards inside their card frame */
+.content-grid .right .friend-list-large{grid-template-columns:1fr}
+.content-grid .right .friend-list-large a{min-width:0;width:100%}
+.content-grid .right .friend-list-large span{min-width:0;overflow-wrap:anywhere}
+.content-grid .right .friend-list-large img{flex:0 0 56px;width:56px;height:56px}
