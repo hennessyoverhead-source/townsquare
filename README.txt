@@ -1,13 +1,5 @@
-TOWNSQUARE SCRUB FIX 02 — September 19, 2026
+TownSquare Scrub Fix 03 — Universal Header/Framing Fix
 
-Changes ONLY profiles/romeo-montague/index.html.
+Replace css/styles.css in the repository.
 
-Romeo's Posts-tab Friends preview now shows:
-- Benvolio
-- Mercutio
-- The Apothecary
-
-The full Friends tab remains unchanged and still contains all three.
-No CSS, JavaScript, comment threads, tabs, business links, or other profiles are changed.
-
-Upload the CONTENTS of this ZIP to the ROOT of the townsquare repository.
+Fixes the oversized TownSquare logo/header seen on all five rebuilt pages and adds explicit desktop/mobile width containment. No HTML, profile content, comments, photos, links, or JavaScript are changed.

@@ -121,3 +121,36 @@ body:has(.business-shell) .business-shell{clear:both}
  .ts-modern .modern-avatar{width:100px;height:100px;flex-basis:100px;margin-top:-30px}
  .ts-modern .modern-friends-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
+
+/* SCRUB FIX 03 — universal modern header/logo containment + mobile framing */
+.ts-modern .topbar{height:56px;min-height:56px;overflow:visible}
+.ts-modern .topbar .brand{display:flex;align-items:center;gap:10px;width:auto;height:44px;min-width:0;overflow:visible}
+.ts-modern .topbar .brand img{display:block;width:40px!important;height:40px!important;min-width:40px!important;max-width:40px!important;max-height:40px!important;object-fit:contain;flex:0 0 40px}
+.ts-modern .topbar .brand-name{display:inline-block;white-space:nowrap}
+.ts-modern .topbar .search{min-width:120px}
+.ts-modern .modern-profile-shell,.ts-modern .modern-page,.ts-modern .modern-panel{min-width:0}
+.ts-modern .modern-profile-shell .cover{width:min(1040px,100%)}
+.ts-modern .modern-profile-head,.ts-modern .modern-tabs,.ts-modern .modern-page{width:min(990px,100%)}
+.ts-modern .modern-grid,.ts-modern .modern-left,.ts-modern .feed,.ts-modern .modern-card{min-width:0}
+.ts-modern .modern-card img{max-width:100%}
+@media(max-width:800px){
+ .ts-modern .topbar{height:56px;min-height:56px;padding:0 10px;gap:8px}
+ .ts-modern .topbar .brand{height:40px;gap:6px}
+ .ts-modern .topbar .brand img{width:36px!important;height:36px!important;min-width:36px!important;max-width:36px!important;max-height:36px!important;flex-basis:36px}
+ .ts-modern .topbar .brand-name{font-size:18px}
+ .ts-modern .topbar .search{flex:1;width:auto;min-width:0;max-width:none}
+ .ts-modern .topbar nav{margin-left:0}
+ .ts-modern .modern-profile-shell .cover{width:100%;border-radius:0}
+ .ts-modern .modern-profile-head{padding-left:14px;padding-right:14px}
+ .ts-modern .modern-page,.ts-modern .modern-panel.single{padding-left:10px;padding-right:10px}
+ .ts-modern .modern-grid{width:100%}
+}
+@media(max-width:520px){
+ .ts-modern .topbar .brand-name{display:none}
+ .ts-modern .topbar nav a{display:none}
+ .ts-modern .modern-profile-head{gap:10px}
+ .ts-modern .modern-identity{min-width:0}
+ .ts-modern .modern-identity h1{overflow-wrap:anywhere}
+ .ts-modern .modern-actions{display:grid;grid-template-columns:1fr 1fr}
+ .ts-modern .modern-tabs{padding-left:4px;padding-right:4px}
+}
