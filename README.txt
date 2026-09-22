@@ -1,17 +1,11 @@
-TOWNSQUARE SCRUB FIX 18 — LORD CAPULET PHOTOS
+TOWNSQUARE SCRUB FIX 19 — LORD CAPULET PROFILE CROP
 
-Adds the three supplied Lord Capulet images:
-- lord-capulet-cover.jpg — cover/banner
-- lord-capulet-profile.jpg — profile/avatar
-- lord-capulet-gallery-1.jpg — gallery
+Replaces ONLY:
+assets/lord-capulet-profile.jpg
 
-Updates Lord Capulet's profile so his real photo is used for the avatar,
-composer/post identity, cover image, and gallery.
+Uses the newly supplied tighter Lord Capulet portrait framing and outputs a
+true 768 × 768 square avatar. Existing HTML already references this filename,
+so the improved crop propagates automatically anywhere Lord Capulet's profile
+photo appears, including his main profile, posts/composer, and landing page.
 
-Also propagates his real profile photo to his landing-page People card,
-following the established TownSquare site-wide profile-photo rule.
-
-Built directly on Fix 16, preserving the Capulet Party event and Fix 15
-landing-page ticket presentation. No CSS or JavaScript is changed.
-Fix 17's global shared JavaScript remains a separate global JS patch and is
-not overwritten by this package.
+No HTML, CSS, JavaScript, event pages, comments, or other assets are changed.
