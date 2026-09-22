@@ -89,9 +89,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 /* Interactive comment threads: preview two, expand to the full displayed count. */
 document.addEventListener('DOMContentLoaded', () => {
   const localNames = [
-    'Sam','Gregory','Nurse','Lawrence','Mia G.','Crystal M.','Sariah G.',
-    'Jessica M.','Paco D.','Natalie R.','Jack W.','Lisa D.','Eva T.',
-    'Lauren W.','Booker H.','Kevin H.','Mojave Local','Desert Rat'
+    'Samson','Gregory','Nurse','Lawrence','John','Peter','Paris',
+    'Tybalt','Mayor','Gloria','Benvolio','Mercutio','Juliet','Lord Capulet',
+    'Lady Capulet','The Apothecary','Desert Looky Loo','Local Yokel',
+    'Honky-Tonker','Gifted Misfit','Mojave Local','Desert Rat'
   ];
   const localReplies = [
     '😂','This tracks.','Only in Mojave.','I knew somebody was going to say it.',

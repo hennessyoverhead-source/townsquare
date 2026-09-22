@@ -1,20 +1,20 @@
-TOWNSQUARE SCRUB FIX 16 — LORD CAPULET PROFILE + CAPULET PARTY EVENT
+TOWNSQUARE SCRUB FIX 17 — GLOBAL COMMENT NAME CLEANUP
 
-Adds:
-- profiles/lord-capulet/index.html
-- events/capulet-party/index.html
-- Lord Capulet card on the current Fix 15 landing page
+GLOBAL shared-JavaScript fix.
 
-Lord Capulet profile is based on the actor questionnaire supplied by the user.
-It uses placeholders for profile/cover/photos because no actor photos have been
-supplied yet. When a real profile photo arrives, propagate it site-wide under
-the established TownSquare rule.
+Removes real cast-member names/initials from the generated comment pool:
+Mia G., Crystal M., Sariah G., Jessica M., Paco D., Natalie R., Jack W.,
+Lisa D., Eva T., Lauren W., Booker H., Kevin H.
 
-Event:
-- Capulet Party
-- Friday, October 9, 2026
-- Hosted by Lord Capulet
-- Linked from both All/Personal Details and About, plus a profile post.
+Replaces them with production character identities and Mojave ensemble-style
+fictional identities, including:
+Samson, Gregory, Nurse, Lawrence, John, Peter, Paris, Tybalt, Mayor, Gloria,
+Benvolio, Mercutio, Juliet, Lord Capulet, Lady Capulet, The Apothecary,
+Desert Looky Loo, Local Yokel, Honky-Tonker, Gifted Misfit, Mojave Local,
+and Desert Rat.
 
-No CSS, JavaScript, or existing profile files are changed.
-The current Fix 15 ticket-link presentation is preserved.
+Because every TownSquare page uses the shared js/townsquare.js file, this
+changes the generated comment names globally without editing every profile.
+
+No HTML, CSS, profile photos, landing page, event page, links, tabs, or
+existing profile content are changed.
