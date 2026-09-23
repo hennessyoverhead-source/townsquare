@@ -86,168 +86,192 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 
-/* Interactive comment threads: unique comments + Facebook-style profile-photo texture. */
+/* Interactive comment threads: Update 22 — character-first TownSquare ecosystem. */
 document.addEventListener('DOMContentLoaded', () => {
-  const people = [
-    {name:'Samson'}, {name:'Gregory'}, {name:'Nurse'}, {name:'Lawrence'}, {name:'John'},
-    {name:'Peter'}, {name:'Paris'}, {name:'Tybalt'}, {name:'Mayor'}, {name:'Gloria'},
-    {name:'Benvolio', slug:'benvolio', photo:'benvolio-profile.jpg'},
-    {name:'Mercutio', slug:'mercutio', photo:'mercutio-profile.jpg'},
-    {name:'Juliet'}, {name:'Lord Capulet', slug:'lord-capulet', photo:'lord-capulet-profile.jpg'},
-    {name:'Lady Capulet'}, {name:'The Apothecary', slug:'apothecary', photo:'apothecary-profile.svg'},
-    {name:'Desert Looky Loo'}, {name:'Local Yokel'}, {name:'Honky-Tonker'},
-    {name:'Gifted Misfit'}, {name:'Mojave Local'}, {name:'Desert Rat'}
-  ];
+  const root = (() => {
+    const p = location.pathname;
+    if (p.includes('/profiles/') || p.includes('/businesses/') || p.includes('/events/')) return '../../';
+    return './';
+  })();
 
-  /* Every generated reply gets a stable site-wide numeric identity derived from
-     page + post + row. The three-part sentence is a one-to-one encoding of that
-     identity, so generated comment text cannot repeat on another TownSquare post. */
-  const openings = [
-    'Okay,','Honestly,','For the record,','I mean,','Well,','Look,','Not gonna lie,',
-    'At this point,','Somehow,','Apparently,','Listen,','Meanwhile,','In Mojave,',
-    'I swear,','No offense,','Just saying,','Fair warning,','As expected,','Naturally,','Seriously,'
-  ];
-  const middles = [
-    'this is exactly the energy I expected','this comment section is doing too much',
-    'somebody had to say it out loud','I have several follow-up questions',
-    'this got weird faster than expected','the desert has entered the chat',
-    'I am choosing not to get involved','this is going straight into the group chat',
-    'I can already hear the argument starting','that explains more than it should',
-    'this feels like a terrible idea','I was absolutely not prepared for this',
-    'the timing on this is incredible','I knew today was going to be interesting',
-    'this is why we cannot have a quiet night','I am filing this away for later',
-    'somebody please keep an eye on them','the confidence here is remarkable',
-    'I refuse to believe this is the whole story','this somehow makes perfect sense'
-  ];
-  const endings = [
-    'and I support the chaos.','but I need details.','so please continue.','and nobody is surprised.',
-    'which feels very on brand.','but do not drag me into it.','and now I need popcorn.',
-    'so I am staying right here.','and that is all I am saying.','but I respect the commitment.',
-    'and I blame the heat.','so somebody save a screenshot.','but this made my afternoon.',
-    'and I have notes.','so behave yourselves.','but I am laughing anyway.',
-    'and this will definitely come up later.','so I am pretending I saw nothing.',
-    'but the Mojave always delivers.','and somehow that tracks.'
-  ];
-
-  const pageKey = location.pathname.replace(/\/+$/,'').split('/').filter(Boolean).join('-') || 'home';
-  const pageOrdinals = {
-    'profiles-romeo-montague':0, 'profiles-benvolio':1, 'profiles-mercutio':2,
-    'profiles-apothecary':3, 'profiles-lord-capulet':4,
-    'businesses-montagues-auto-repair':5, 'events-capulet-party':6
+  const people = {
+    'Romeo Montague': {url:'profiles/romeo-montague/', img:'assets/romeo-profile.svg'},
+    'Romeo': {url:'profiles/romeo-montague/', img:'assets/romeo-profile.svg'},
+    'Benvolio': {url:'profiles/benvolio/', img:'assets/benvolio-profile.jpg'},
+    'Mercutio': {url:'profiles/mercutio/', img:'assets/mercutio-profile.jpg'},
+    'The Apothecary': {url:'profiles/apothecary/', img:'assets/apothecary-profile.jpg'},
+    'Apothecary': {url:'profiles/apothecary/', img:'assets/apothecary-profile.jpg'},
+    'Lord Capulet': {url:'profiles/lord-capulet/', img:'assets/lord-capulet-profile.jpg'}
   };
-  let pageHash = 0;
-  for (let i=0;i<pageKey.length;i++) pageHash = (pageHash * 31 + pageKey.charCodeAt(i)) >>> 0;
-  const pageOrdinal = Object.prototype.hasOwnProperty.call(pageOrdinals,pageKey) ? pageOrdinals[pageKey] : 7 + (pageHash % 8);
-  const usedOnPage = new Set(
-    [...document.querySelectorAll('.comment p,.business-comment p')]
-      .map(p => p.textContent.trim()).filter(Boolean)
-  );
+  const placeholder = root+'assets/friend-placeholder.svg';
+  const avatarFor = name => people[name]?.img ? root+people[name].img : placeholder;
+  const hrefFor = name => people[name]?.url ? root+people[name].url : '';
 
-  const personByName = new Map(people.map(p => [p.name.toLowerCase(), p]));
-  const assetUrl = file => '/assets/' + file;
-  const profileUrl = slug => '/profiles/' + slug + '/';
-
-  function avatarFor(person, sizeClass='generated-avatar') {
-    const wrap = document.createElement(person.slug ? 'a' : 'span');
-    if (person.slug) wrap.href = profileUrl(person.slug);
-    wrap.className = 'comment-avatar-link';
-    const img = document.createElement('img');
-    img.className = sizeClass;
-    img.alt = person.name;
-    img.src = assetUrl(person.photo || 'friend-placeholder.svg');
-    wrap.appendChild(img);
-    return wrap;
-  }
-
-  function uniqueReply(postIndex, rowIndex) {
-    /* 8,000 natural combinations. pageHash chooses a page-specific block;
-       post/row selects a unique member inside that block. Collision fallback
-       rotates deterministically until the visible sentence is unused. */
-    let n = (pageOrdinal * 900 + postIndex * 100 + rowIndex) % 8000;
-    for (let tries=0; tries<8000; tries++, n=(n+1)%8000) {
-      const a = n % 20;
-      const b = Math.floor(n/20) % 20;
-      const c = Math.floor(n/400) % 20;
-      const text = openings[a] + ' ' + middles[b] + ', ' + endings[c];
-      if (!usedOnPage.has(text)) { usedOnPage.add(text); return text; }
-    }
-    return 'Mojave has officially left me speechless. 🌵';
-  }
-
-  document.querySelectorAll('.post, .business-card').forEach((post, postIndex) => {
-    const summary = post.querySelector('.summary');
-    if (!summary) return;
-    const countNode = [...summary.querySelectorAll('span,button')].find(el => /\d+\s+comments?/i.test(el.textContent));
-    if (!countNode) return;
-    const match = countNode.textContent.match(/(\d+)\s+comments?/i);
-    if (!match) return;
-    const total = parseInt(match[1], 10);
-
-    let thread = post.querySelector('.comments, .business-comments');
-    if (!thread) {
-      thread = document.createElement('div');
-      thread.className = post.classList.contains('business-card') ? 'business-comments' : 'comments';
-      const actions = post.querySelector('.actions');
-      (actions || summary).insertAdjacentElement('afterend', thread);
-    }
-
-    /* Upgrade existing comments too: if they lack an avatar, add a circular
-       profile image/placeholder based on the displayed commenter name. */
-    [...thread.querySelectorAll('.comment, .business-comment')].forEach(row => {
-      if (row.querySelector('img,.generated-avatar,.comment-avatar-link')) return;
-      const nameEl = row.querySelector('b,strong,a');
-      const name = nameEl ? nameEl.textContent.trim() : '';
-      const person = personByName.get(name.toLowerCase()) || {name:name || 'Mojave Local'};
-      row.insertBefore(avatarFor(person), row.firstChild);
-    });
-
-    const existing = thread.querySelectorAll('.comment, .business-comment').length;
-    const needed = Math.max(0, total - existing);
-    for (let i = 0; i < needed; i++) {
-      const row = document.createElement('div');
-      row.className = (thread.classList.contains('business-comments') ? 'business-comment ' : 'comment ') + 'thread-extra generated-comment';
-      const person = people[(pageHash + postIndex * 7 + i) % people.length];
-      const reply = uniqueReply(postIndex, i);
-      const bubble = document.createElement('div');
-      const name = document.createElement(person.slug ? 'a' : 'b');
-      if (person.slug) name.href = profileUrl(person.slug);
-      name.textContent = person.name;
-      const p = document.createElement('p'); p.textContent = reply;
-      const small = document.createElement('small'); small.textContent = 'Like · Reply';
-      bubble.append(name,p,small);
-      row.append(avatarFor(person),bubble);
-      thread.appendChild(row);
-    }
-
-    const countButton = document.createElement('button');
-    countButton.type = 'button'; countButton.className = 'comment-count-link';
-    countButton.textContent = total + (total === 1 ? ' comment' : ' comments');
-    countNode.replaceWith(countButton);
-    const toggle = document.createElement('button');
-    toggle.type = 'button'; toggle.className = 'thread-toggle';
-    toggle.textContent = 'View all ' + total + (total === 1 ? ' comment' : ' comments');
-    thread.appendChild(toggle);
-    const setExpanded = expanded => {
-      thread.classList.toggle('thread-expanded', expanded);
-      toggle.textContent = expanded ? 'Hide comments' : 'View all ' + total + (total === 1 ? ' comment' : ' comments');
-      countButton.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-    };
-    countButton.addEventListener('click', () => setExpanded(!thread.classList.contains('thread-expanded')));
-    toggle.addEventListener('click', () => setExpanded(!thread.classList.contains('thread-expanded')));
-    const commentAction = [...post.querySelectorAll('.actions button')].find(b => /comment/i.test(b.textContent));
-    if (commentAction) commentAction.addEventListener('click', () => setExpanded(true));
-  });
-
-  /* Inject only the small avatar treatment needed by comments. This avoids
-     touching the global stylesheet and therefore cannot regress profile/header/mobile CSS. */
-  const style = document.createElement('style');
-  style.textContent = `
-    .comment-avatar-link{display:block;flex:0 0 34px;width:34px;height:34px;border-radius:50%;overflow:hidden;background:#e4e6eb}
-    .business-comment .comment-avatar-link{flex-basis:38px;width:38px;height:38px}
-    .comment-avatar-link img,.generated-avatar{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;background:#e4e6eb}
-    .comment>img,.business-comment>img{object-fit:cover;background:#e4e6eb}
-    .generated-comment>div>a,.generated-comment>div>b{font-weight:700;color:#050505;text-decoration:none}
-    .generated-comment>div>a:hover{text-decoration:underline}
+  const style=document.createElement('style');
+  style.textContent=`
+    .comments .comment,.business-comments .business-comment{display:flex;gap:9px;align-items:flex-start;margin:10px 0}
+    .comments .comment>a:first-child,.comments .comment>img:first-child,.business-comments .business-comment>a:first-child,.business-comments .business-comment>img:first-child{flex:0 0 34px}
+    .comments .comment>a:first-child img,.comments .comment>img:first-child,.business-comments .business-comment>a:first-child img,.business-comments .business-comment>img:first-child,.ts-comment-avatar{width:34px!important;height:34px!important;min-width:34px;object-fit:cover;border-radius:50%!important;display:block}
+    .comments .comment.reply,.business-comments .business-comment.reply{margin-left:42px}
+    .comment-count-link,.thread-toggle{border:0;background:none;color:#65676b;cursor:pointer;padding:0;font:inherit}
+    .comment-count-link:hover,.thread-toggle:hover{text-decoration:underline}
+    .thread-toggle{display:block;margin:9px 0 2px;font-weight:600}
+    .comments:not(.thread-expanded) .comment:nth-of-type(n+3),.business-comments:not(.thread-expanded) .business-comment:nth-of-type(n+3){display:none}
+    .ts-deleted p{color:#777;font-style:italic;background:#f0f2f5;border-radius:10px;padding:8px 10px;margin-top:3px}
+    .ts-story-post{border-top:1px solid #ddd;margin-top:14px;padding-top:14px}
+    .ts-reaction-note{color:#65676b;font-size:13px;margin:5px 0 0 43px}
+    .ts-event-discussion{margin-top:18px;padding-top:18px;border-top:1px solid #ddd}
+    .ts-event-discussion h2{margin-bottom:12px}
   `;
   document.head.appendChild(style);
+
+  const comment = (name, text, opts={}) => ({name,text,...opts});
+  const C = {
+    mercutioHubris:[
+      comment('Benvolio','This is exactly the kind of thing I mean.'),
+      comment('Romeo Montague','Please do not challenge the gods from the shop account.'),
+      comment('Mercutio','cowards. both of you.',{reply:true})
+    ],
+    mercutioGo:[
+      comment('Benvolio','I am afraid to ask.'),
+      comment('Romeo Montague','Whatever happened, congratulations.'),
+      comment('Peter','I support this level of enthusiasm without knowing what happened.')
+    ],
+    mercutioAsked:[
+      comment('Benvolio','Merc.'),
+      comment('Mercutio','what',{reply:true}),
+      comment('Tybalt','This comment was removed for violating TownSquare\'s Terms of Service.',{reply:true,deleted:true}),
+      comment('Mercutio','and there it is',{reply:true})
+    ],
+    benReasonable:[
+      comment('Mercutio','boring. do something irresponsible'),
+      comment('Romeo Montague','Appreciated, coz.'),
+      comment('Nurse','Someone has to have some sense around here.')
+    ],
+    benCoffee:[
+      comment('Mercutio','counterpoint: no'),
+      comment('Romeo Montague','Coffee first. Everything else second.'),
+      comment('Peter','This seems like a very optimistic plan.')
+    ],
+    romeoDistance:[
+      comment('Benvolio','You know where to find us.'),
+      comment('Mercutio','bro discovered distance 💀'),
+      comment('Nurse','Go to bed, Romeo.')
+    ],
+    romeoShop:[
+      comment('Mercutio','skill issue'),
+      comment('Benvolio','It was the heat shield. I told you it was the heat shield.'),
+      comment('Balthasar','Mystery rattle: undefeated since the invention of the automobile.'),
+      comment('Romeo Montague','I hate that this is true.',{reply:true})
+    ],
+    apothLavender:[
+      comment('Lawrence','Save me a bundle. I may have a use for it.'),
+      comment('The Apothecary','You always do.',{reply:true}),
+      comment('Nurse','Put one aside for me too, please.')
+    ],
+    apothPrivate:[
+      comment('Nurse','Private order? Now you have me curious.'),
+      comment('The Apothecary','That is why it is called private.',{reply:true}),
+      comment('Peter','Fair point.',{reply:true})
+    ],
+    lordParty:[
+      comment('Peter','I was told there would be food and have chosen not to ask any further questions.'),
+      comment('Nurse','There had better be dancing.'),
+      comment('Lady Capulet','SO excited for this!! ✨🥂 The house is going to look AMAZING. #CapuletParty #MojaveNights #Blessed'),
+      comment('Gregory','Samson says he\'s dressing up. I would like everyone to remember he said this voluntarily.'),
+      comment('Samson','Delete this.',{reply:true}),
+      comment('Potpan','Everybody\'s excited about the party. Nobody\'s excited about helping with the dishes.'),
+      comment('Mercutio','heard the guest list needed better people so i made some executive decisions. you\'re welcome'),
+      comment('Tybalt','This comment was removed for violating TownSquare\'s Terms of Service.',{reply:true,deleted:true}),
+      comment('Benvolio','Merc.',{reply:true}),
+      comment('Mercutio','what',{reply:true}),
+      comment('Peter','I don\'t know what happened but I support Benvolio.',{reply:true}),
+      comment('Lord Capulet','For Christ\'s sake.',{reply:true})
+    ],
+    lordWeather:[
+      comment('Lady Capulet','7!!! ❤️❤️❤️'),
+      comment('Mercutio','we heard you',{reply:true}),
+      comment('Tybalt','I\'ll be there.'),
+      comment('Lord Capulet','Try to stay out of trouble.',{reply:true}),
+      comment('Tybalt','Always do.',{reply:true}),
+      comment('Mercutio','does lord c have to come pick you up every time you get banned or is there like a shuttle',{reply:true}),
+      comment('Tybalt','This comment was removed for violating TownSquare\'s Terms of Service.',{reply:true,deleted:true}),
+      comment('Lord Capulet','For Christ\'s sake.',{reply:true})
+    ]
+  };
+
+  function makeComment(c, business=false){
+    const row=document.createElement('div');
+    row.className=(business?'business-comment ':'comment ')+(c.reply?'reply ':'')+(c.deleted?'ts-deleted ':'');
+    const href=hrefFor(c.name), img=avatarFor(c.name);
+    const av=href?`<a href="${href}"><img class="ts-comment-avatar" src="${img}" alt="${c.name}"></a>`:`<img class="ts-comment-avatar" src="${img}" alt="">`;
+    const nm=href?`<a href="${href}"><b>${c.name}</b></a>`:`<b>${c.name}</b>`;
+    row.innerHTML=`${av}<div>${nm}<p>${c.text}</p><small>Like · Reply</small></div>`;
+    row.querySelector('img')?.addEventListener('error',e=>{e.currentTarget.src=placeholder},{once:true});
+    return row;
+  }
+
+  function choose(post){
+    const txt=(post.textContent||'').toLowerCase();
+    if(txt.includes('hubris')) return C.mercutioHubris;
+    if(txt.includes('let’s fucking')||txt.includes("let's fucking")) return C.mercutioGo;
+    if(txt.includes('literally no one asked')) return C.mercutioAsked;
+    if(txt.includes('reasonable one')) return C.benReasonable;
+    if(txt.includes('keep merc from starting')) return C.benCoffee;
+    if(txt.includes('farther away than it is')) return C.romeoDistance;
+    if(txt.includes('mystery rattle')) return C.romeoShop;
+    if(txt.includes('fresh desert lavender')) return C.apothLavender;
+    if(txt.includes('private order')) return C.apothPrivate;
+    if(txt.includes('party preparations are underway')) return C.lordParty;
+    if(txt.includes('weather checked. whiskey stocked')) return C.lordWeather;
+    return null;
+  }
+
+  function wireThread(post, curated){
+    const summary=post.querySelector('.summary');
+    if(!summary) return;
+    let thread=post.querySelector('.comments, .business-comments');
+    if(!thread){thread=document.createElement('div');thread.className='comments';(post.querySelector('.actions')||summary).insertAdjacentElement('afterend',thread);}
+    if(curated){thread.innerHTML='';curated.forEach(c=>thread.appendChild(makeComment(c,thread.classList.contains('business-comments'))));}
+    const total=thread.querySelectorAll('.comment,.business-comment').length;
+    const old=[...summary.querySelectorAll('span,button')].find(el=>/\d+\s+comments?/i.test(el.textContent));
+    const countButton=document.createElement('button');countButton.type='button';countButton.className='comment-count-link';countButton.textContent=total+(total===1?' comment':' comments');
+    if(old) old.replaceWith(countButton); else summary.appendChild(countButton);
+    thread.querySelectorAll('.thread-toggle').forEach(x=>x.remove());
+    if(total>2){const toggle=document.createElement('button');toggle.type='button';toggle.className='thread-toggle';thread.appendChild(toggle);
+      const setExpanded=expanded=>{thread.classList.toggle('thread-expanded',expanded);toggle.textContent=expanded?'Hide comments':'View all '+total+' comments';countButton.setAttribute('aria-expanded',String(expanded));};
+      setExpanded(false);countButton.addEventListener('click',()=>setExpanded(!thread.classList.contains('thread-expanded')));toggle.addEventListener('click',()=>setExpanded(!thread.classList.contains('thread-expanded')));
+      const action=[...post.querySelectorAll('.actions button')].find(b=>/comment/i.test(b.textContent));if(action)action.addEventListener('click',()=>setExpanded(true));
+    }
+  }
+
+  // Replace inflated/template threads only where Update 22 has a character-specific conversation.
+  document.querySelectorAll('.post, .business-card').forEach(post=>{const curated=choose(post);if(curated)wireThread(post,curated);});
+
+  // Old-photo history: one copy only, on Romeo's All feed. The joke implies 35 years of history without exposition.
+  if(location.pathname.includes('/profiles/romeo-montague/')){
+    const feed=document.querySelector('#all .feed');
+    if(feed && !document.querySelector('.ts-1991-post')){
+      const art=document.createElement('article');art.className='card post modern-card ts-1991-post';
+      art.innerHTML=`<header><a href="./"><img src="${avatarFor('Romeo Montague')}" alt="Romeo Montague"></a><div><a href="./"><b>Romeo Montague</b></a><small>Throwback · 🌐</small></div></header><p>Found this in a box at the shop. 1991 was a choice.</p><div class="summary"><span>😂 ❤️ 73</span><span>8 comments</span></div><div class="actions"><button class="decorative">♡ Like</button><button class="decorative">▢ Comment</button><button class="decorative">↗ Share</button></div><div class="comments"></div>`;
+      const story=[
+        comment('Mercutio','oh my god. THE PONYTAIL'),comment('Romeo Montague','It was 1991.',{reply:true}),
+        comment('Mercutio','you had a ponytail AND a goatee',{reply:true}),comment('Romeo Montague','So did half the guys we knew.',{reply:true}),
+        comment('Mercutio','and history has judged all of you',{reply:true}),comment('Benvolio',"I didn't.",{reply:true}),
+        comment('Mercutio','did you ever have any hair above your neckline? 😘',{reply:true}),comment('Benvolio','I hate you.',{reply:true})
+      ];
+      feed.appendChild(art);wireThread(art,story);
+      const note=document.createElement('div');note.className='ts-reaction-note';note.textContent='Juliet ❤️ reacted to this';art.querySelector('.comments').appendChild(note);
+    }
+  }
+
+  // Event page gets its own living discussion without changing the event's established details.
+  if(location.pathname.includes('/events/capulet-party/')){
+    const body=document.querySelector('.event-body');
+    if(body && !body.querySelector('.ts-event-discussion')){
+      const sec=document.createElement('section');sec.className='ts-event-discussion';sec.innerHTML='<h2>Discussion</h2><div class="comments thread-expanded"></div>';
+      C.lordParty.forEach(c=>sec.querySelector('.comments').appendChild(makeComment(c)));
+      body.appendChild(sec);
+    }
+  }
 });

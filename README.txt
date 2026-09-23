@@ -1,21 +1,29 @@
-TOWNSQUARE SCRUB FIX 20 — UNIQUE COMMENTS + COMMENT AVATARS
+TownSquare Scrub Fix 22 — Character Ecosystem Deep Dive
+September 22, 2026
 
-GLOBAL shared-JavaScript fix.
+BASE: Fix 17 (the user's currently installed comment-system base). Fixes 20 and 21 are NOT prerequisites and should NOT be installed.
 
-1. Generated expanded-thread comments are now unique instead of being selected
-   from the old small repeating reply pool. Current TownSquare profile/business
-   pages receive separate deterministic comment ranges so the generated text
-   does not repeat from post to post or page to page.
+INSTALL:
+Upload the js folder from this ZIP to the repository root and replace js/townsquare.js. Commit the change. Then hard-refresh with Command + Shift + R.
 
-2. Comments now have Facebook-style circular profile-photo texture globally.
-   Where TownSquare has a real profile photo (Benvolio, Mercutio, Lord Capulet,
-   Apothecary), that image is used and links to the character profile. Other
-   Shakespeare/Mojave commenters receive the standard friend placeholder until
-   their real profile photo exists. Existing static comments that lack an avatar
-   are upgraded too.
+WHAT THIS UPDATE DOES:
+- Replaces the generic generated-comment filler system with hand-curated, character-specific conversations on the existing Romeo, Benvolio, Mercutio, Apothecary, and Lord Capulet posts.
+- Displayed comment totals now reflect the comments actually present in each curated thread.
+- Keeps preview-two / View all / Hide comments / Comment-button expansion behavior.
+- Adds circular comment avatars and profile links for characters whose TownSquare profiles exist; deep-cut/minor characters use the existing placeholder avatar.
+- Adds nested replies.
+- Adds the 1991 Romeo ponytail/goatee throwback thread, including Juliet's heart reaction.
+- Adds a Capulet Party event-page discussion.
+- Adds the approved Mercutio/Tybalt/Lord C shuttle exchange and TownSquare Terms-of-Service removals.
+- Uses Lady C's enthusiastic influencer voice, Nurse's warm/practical voice, Peter, Samson/Gregory, Potpan, Balthasar, Lawrence, and the established core cast voices.
+- Keeps Tybalt charismatic but volatile; his moderation violations are a recurring flaw, not his entire personality.
+- Keeps Lord C's affection/long-suffering relationship with Tybalt visible.
 
-3. Character names with real profiles are clickable in generated comments.
+STABILITY:
+- Only js/townsquare.js is changed.
+- No HTML, CSS, images, profile layouts, ticket links, logos, DNS, or hosting settings are replaced.
+- The existing profile tabs, lightbox, search code, business-search augmentation, and earlier fixes remain ahead of the Update 22 block unchanged.
+- The critical [hidden]{display:none!important} CSS is not touched.
 
-Preserved: comment counts, View all / Hide comments, Comment-button expansion,
-Fix 17 Shakespeare-appropriate commenter names, search augmentation, and all
-other shared JavaScript. No HTML or global CSS file is changed.
+CREATIVE RULE:
+Shakespeare's text supplies the language; the Mojave staging/rehearsal discoveries supply what that language means in this world. TownSquare hints at the adaptation rather than explaining or spoiling it.
