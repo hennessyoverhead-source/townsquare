@@ -1,11 +1,21 @@
-TOWNSQUARE SCRUB FIX 19 — LORD CAPULET PROFILE CROP
+TOWNSQUARE SCRUB FIX 20 — UNIQUE COMMENTS + COMMENT AVATARS
 
-Replaces ONLY:
-assets/lord-capulet-profile.jpg
+GLOBAL shared-JavaScript fix.
 
-Uses the newly supplied tighter Lord Capulet portrait framing and outputs a
-true 768 × 768 square avatar. Existing HTML already references this filename,
-so the improved crop propagates automatically anywhere Lord Capulet's profile
-photo appears, including his main profile, posts/composer, and landing page.
+1. Generated expanded-thread comments are now unique instead of being selected
+   from the old small repeating reply pool. Current TownSquare profile/business
+   pages receive separate deterministic comment ranges so the generated text
+   does not repeat from post to post or page to page.
 
-No HTML, CSS, JavaScript, event pages, comments, or other assets are changed.
+2. Comments now have Facebook-style circular profile-photo texture globally.
+   Where TownSquare has a real profile photo (Benvolio, Mercutio, Lord Capulet,
+   Apothecary), that image is used and links to the character profile. Other
+   Shakespeare/Mojave commenters receive the standard friend placeholder until
+   their real profile photo exists. Existing static comments that lack an avatar
+   are upgraded too.
+
+3. Character names with real profiles are clickable in generated comments.
+
+Preserved: comment counts, View all / Hide comments, Comment-button expansion,
+Fix 17 Shakespeare-appropriate commenter names, search augmentation, and all
+other shared JavaScript. No HTML or global CSS file is changed.

@@ -86,26 +86,97 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 
-/* Interactive comment threads: preview two, expand to the full displayed count. */
+/* Interactive comment threads: unique comments + Facebook-style profile-photo texture. */
 document.addEventListener('DOMContentLoaded', () => {
-  const localNames = [
-    'Samson','Gregory','Nurse','Lawrence','John','Peter','Paris',
-    'Tybalt','Mayor','Gloria','Benvolio','Mercutio','Juliet','Lord Capulet',
-    'Lady Capulet','The Apothecary','Desert Looky Loo','Local Yokel',
-    'Honky-Tonker','Gifted Misfit','Mojave Local','Desert Rat'
+  const people = [
+    {name:'Samson'}, {name:'Gregory'}, {name:'Nurse'}, {name:'Lawrence'}, {name:'John'},
+    {name:'Peter'}, {name:'Paris'}, {name:'Tybalt'}, {name:'Mayor'}, {name:'Gloria'},
+    {name:'Benvolio', slug:'benvolio', photo:'benvolio-profile.jpg'},
+    {name:'Mercutio', slug:'mercutio', photo:'mercutio-profile.jpg'},
+    {name:'Juliet'}, {name:'Lord Capulet', slug:'lord-capulet', photo:'lord-capulet-profile.jpg'},
+    {name:'Lady Capulet'}, {name:'The Apothecary', slug:'apothecary', photo:'apothecary-profile.svg'},
+    {name:'Desert Looky Loo'}, {name:'Local Yokel'}, {name:'Honky-Tonker'},
+    {name:'Gifted Misfit'}, {name:'Mojave Local'}, {name:'Desert Rat'}
   ];
-  const localReplies = [
-    '😂','This tracks.','Only in Mojave.','I knew somebody was going to say it.',
-    'Absolutely not.','Well, there it is.','You people are exhausting. ❤️',
-    'See you at the shop.','I have questions.','No notes.','This made my day.',
-    'Please behave.','That seems completely reasonable.','I am staying out of this.',
-    'Somebody screenshot this.','Noted. 👀','The desert provides. 🌵','Okay, this is funny.'
+
+  /* Every generated reply gets a stable site-wide numeric identity derived from
+     page + post + row. The three-part sentence is a one-to-one encoding of that
+     identity, so generated comment text cannot repeat on another TownSquare post. */
+  const openings = [
+    'Okay,','Honestly,','For the record,','I mean,','Well,','Look,','Not gonna lie,',
+    'At this point,','Somehow,','Apparently,','Listen,','Meanwhile,','In Mojave,',
+    'I swear,','No offense,','Just saying,','Fair warning,','As expected,','Naturally,','Seriously,'
   ];
+  const middles = [
+    'this is exactly the energy I expected','this comment section is doing too much',
+    'somebody had to say it out loud','I have several follow-up questions',
+    'this got weird faster than expected','the desert has entered the chat',
+    'I am choosing not to get involved','this is going straight into the group chat',
+    'I can already hear the argument starting','that explains more than it should',
+    'this feels like a terrible idea','I was absolutely not prepared for this',
+    'the timing on this is incredible','I knew today was going to be interesting',
+    'this is why we cannot have a quiet night','I am filing this away for later',
+    'somebody please keep an eye on them','the confidence here is remarkable',
+    'I refuse to believe this is the whole story','this somehow makes perfect sense'
+  ];
+  const endings = [
+    'and I support the chaos.','but I need details.','so please continue.','and nobody is surprised.',
+    'which feels very on brand.','but do not drag me into it.','and now I need popcorn.',
+    'so I am staying right here.','and that is all I am saying.','but I respect the commitment.',
+    'and I blame the heat.','so somebody save a screenshot.','but this made my afternoon.',
+    'and I have notes.','so behave yourselves.','but I am laughing anyway.',
+    'and this will definitely come up later.','so I am pretending I saw nothing.',
+    'but the Mojave always delivers.','and somehow that tracks.'
+  ];
+
+  const pageKey = location.pathname.replace(/\/+$/,'').split('/').filter(Boolean).join('-') || 'home';
+  const pageOrdinals = {
+    'profiles-romeo-montague':0, 'profiles-benvolio':1, 'profiles-mercutio':2,
+    'profiles-apothecary':3, 'profiles-lord-capulet':4,
+    'businesses-montagues-auto-repair':5, 'events-capulet-party':6
+  };
+  let pageHash = 0;
+  for (let i=0;i<pageKey.length;i++) pageHash = (pageHash * 31 + pageKey.charCodeAt(i)) >>> 0;
+  const pageOrdinal = Object.prototype.hasOwnProperty.call(pageOrdinals,pageKey) ? pageOrdinals[pageKey] : 7 + (pageHash % 8);
+  const usedOnPage = new Set(
+    [...document.querySelectorAll('.comment p,.business-comment p')]
+      .map(p => p.textContent.trim()).filter(Boolean)
+  );
+
+  const personByName = new Map(people.map(p => [p.name.toLowerCase(), p]));
+  const assetUrl = file => '/assets/' + file;
+  const profileUrl = slug => '/profiles/' + slug + '/';
+
+  function avatarFor(person, sizeClass='generated-avatar') {
+    const wrap = document.createElement(person.slug ? 'a' : 'span');
+    if (person.slug) wrap.href = profileUrl(person.slug);
+    wrap.className = 'comment-avatar-link';
+    const img = document.createElement('img');
+    img.className = sizeClass;
+    img.alt = person.name;
+    img.src = assetUrl(person.photo || 'friend-placeholder.svg');
+    wrap.appendChild(img);
+    return wrap;
+  }
+
+  function uniqueReply(postIndex, rowIndex) {
+    /* 8,000 natural combinations. pageHash chooses a page-specific block;
+       post/row selects a unique member inside that block. Collision fallback
+       rotates deterministically until the visible sentence is unused. */
+    let n = (pageOrdinal * 900 + postIndex * 100 + rowIndex) % 8000;
+    for (let tries=0; tries<8000; tries++, n=(n+1)%8000) {
+      const a = n % 20;
+      const b = Math.floor(n/20) % 20;
+      const c = Math.floor(n/400) % 20;
+      const text = openings[a] + ' ' + middles[b] + ', ' + endings[c];
+      if (!usedOnPage.has(text)) { usedOnPage.add(text); return text; }
+    }
+    return 'Mojave has officially left me speechless. 🌵';
+  }
 
   document.querySelectorAll('.post, .business-card').forEach((post, postIndex) => {
     const summary = post.querySelector('.summary');
     if (!summary) return;
-
     const countNode = [...summary.querySelectorAll('span,button')].find(el => /\d+\s+comments?/i.test(el.textContent));
     if (!countNode) return;
     const match = countNode.textContent.match(/(\d+)\s+comments?/i);
@@ -120,46 +191,63 @@ document.addEventListener('DOMContentLoaded', () => {
       (actions || summary).insertAdjacentElement('afterend', thread);
     }
 
+    /* Upgrade existing comments too: if they lack an avatar, add a circular
+       profile image/placeholder based on the displayed commenter name. */
+    [...thread.querySelectorAll('.comment, .business-comment')].forEach(row => {
+      if (row.querySelector('img,.generated-avatar,.comment-avatar-link')) return;
+      const nameEl = row.querySelector('b,strong,a');
+      const name = nameEl ? nameEl.textContent.trim() : '';
+      const person = personByName.get(name.toLowerCase()) || {name:name || 'Mojave Local'};
+      row.insertBefore(avatarFor(person), row.firstChild);
+    });
+
     const existing = thread.querySelectorAll('.comment, .business-comment').length;
     const needed = Math.max(0, total - existing);
-
     for (let i = 0; i < needed; i++) {
       const row = document.createElement('div');
       row.className = (thread.classList.contains('business-comments') ? 'business-comment ' : 'comment ') + 'thread-extra generated-comment';
-      const name = localNames[(postIndex + i) % localNames.length];
-      const reply = localReplies[(postIndex * 3 + i) % localReplies.length];
-
-      if (thread.classList.contains('business-comments')) {
-        row.innerHTML = '<span class="generated-avatar">' + name.charAt(0) + '</span><div><b>' + name + '</b><p>' + reply + '</p><small>Like · Reply</small></div>';
-      } else {
-        row.innerHTML = '<span class="generated-avatar">' + name.charAt(0) + '</span><div><b>' + name + '</b><p>' + reply + '</p><small>Like · Reply</small></div>';
-      }
+      const person = people[(pageHash + postIndex * 7 + i) % people.length];
+      const reply = uniqueReply(postIndex, i);
+      const bubble = document.createElement('div');
+      const name = document.createElement(person.slug ? 'a' : 'b');
+      if (person.slug) name.href = profileUrl(person.slug);
+      name.textContent = person.name;
+      const p = document.createElement('p'); p.textContent = reply;
+      const small = document.createElement('small'); small.textContent = 'Like · Reply';
+      bubble.append(name,p,small);
+      row.append(avatarFor(person),bubble);
       thread.appendChild(row);
     }
 
-    // Replace static count text with an accessible clickable control.
     const countButton = document.createElement('button');
-    countButton.type = 'button';
-    countButton.className = 'comment-count-link';
+    countButton.type = 'button'; countButton.className = 'comment-count-link';
     countButton.textContent = total + (total === 1 ? ' comment' : ' comments');
     countNode.replaceWith(countButton);
-
     const toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'thread-toggle';
+    toggle.type = 'button'; toggle.className = 'thread-toggle';
     toggle.textContent = 'View all ' + total + (total === 1 ? ' comment' : ' comments');
     thread.appendChild(toggle);
-
-    const setExpanded = (expanded) => {
+    const setExpanded = expanded => {
       thread.classList.toggle('thread-expanded', expanded);
       toggle.textContent = expanded ? 'Hide comments' : 'View all ' + total + (total === 1 ? ' comment' : ' comments');
       countButton.setAttribute('aria-expanded', expanded ? 'true' : 'false');
     };
-
     countButton.addEventListener('click', () => setExpanded(!thread.classList.contains('thread-expanded')));
     toggle.addEventListener('click', () => setExpanded(!thread.classList.contains('thread-expanded')));
-
     const commentAction = [...post.querySelectorAll('.actions button')].find(b => /comment/i.test(b.textContent));
     if (commentAction) commentAction.addEventListener('click', () => setExpanded(true));
   });
+
+  /* Inject only the small avatar treatment needed by comments. This avoids
+     touching the global stylesheet and therefore cannot regress profile/header/mobile CSS. */
+  const style = document.createElement('style');
+  style.textContent = `
+    .comment-avatar-link{display:block;flex:0 0 34px;width:34px;height:34px;border-radius:50%;overflow:hidden;background:#e4e6eb}
+    .business-comment .comment-avatar-link{flex-basis:38px;width:38px;height:38px}
+    .comment-avatar-link img,.generated-avatar{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;background:#e4e6eb}
+    .comment>img,.business-comment>img{object-fit:cover;background:#e4e6eb}
+    .generated-comment>div>a,.generated-comment>div>b{font-weight:700;color:#050505;text-decoration:none}
+    .generated-comment>div>a:hover{text-decoration:underline}
+  `;
+  document.head.appendChild(style);
 });
