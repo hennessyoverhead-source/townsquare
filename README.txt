@@ -1,29 +1,26 @@
-TownSquare Scrub Fix 22 — Character Ecosystem Deep Dive
-September 22, 2026
+TownSquare Scrub — Version 23
+September 24, 2026
 
-BASE: Fix 17 (the user's currently installed comment-system base). Fixes 20 and 21 are NOT prerequisites and should NOT be installed.
+BUILT DIRECTLY ON VERSION 22.
 
-INSTALL:
-Upload the js folder from this ZIP to the repository root and replace js/townsquare.js. Commit the change. Then hard-refresh with Command + Shift + R.
+CHANGES
+1. GLOBAL PHOTO VIEWER
+   - Real photos in every profile Photos section are now clickable/tappable.
+   - Opens the full image in a Facebook-style dark lightbox.
+   - Full image is shown uncropped and scaled to fit the browser window.
+   - Close with X, click/tap outside the photo, or Escape.
+   - Left/right arrows and keyboard arrows move through multiple photos.
+   - Mobile responsive.
+   - Placeholder/SVG images are intentionally excluded.
+   - The behavior is selector-based so future real photos added to standard Photos grids inherit it automatically.
 
-WHAT THIS UPDATE DOES:
-- Replaces the generic generated-comment filler system with hand-curated, character-specific conversations on the existing Romeo, Benvolio, Mercutio, Apothecary, and Lord Capulet posts.
-- Displayed comment totals now reflect the comments actually present in each curated thread.
-- Keeps preview-two / View all / Hide comments / Comment-button expansion behavior.
-- Adds circular comment avatars and profile links for characters whose TownSquare profiles exist; deep-cut/minor characters use the existing placeholder avatar.
-- Adds nested replies.
-- Adds the 1991 Romeo ponytail/goatee throwback thread, including Juliet's heart reaction.
-- Adds a Capulet Party event-page discussion.
-- Adds the approved Mercutio/Tybalt/Lord C shuttle exchange and TownSquare Terms-of-Service removals.
-- Uses Lady C's enthusiastic influencer voice, Nurse's warm/practical voice, Peter, Samson/Gregory, Potpan, Balthasar, Lawrence, and the established core cast voices.
-- Keeps Tybalt charismatic but volatile; his moderation violations are a recurring flaw, not his entire personality.
-- Keeps Lord C's affection/long-suffering relationship with Tybalt visible.
+2. LORD CAPULET / TYBALT COPY
+   - Changed both Lord Capulet instances of “For Christ's sake.” to “Not again.”
+   - This includes the party thread and the Tybalt/shuttle exchange.
 
-STABILITY:
-- Only js/townsquare.js is changed.
-- No HTML, CSS, images, profile layouts, ticket links, logos, DNS, or hosting settings are replaced.
-- The existing profile tabs, lightbox, search code, business-search augmentation, and earlier fixes remain ahead of the Update 22 block unchanged.
-- The critical [hidden]{display:none!important} CSS is not touched.
+FILES CHANGED
+- js/townsquare.js ONLY
 
-CREATIVE RULE:
-Shakespeare's text supplies the language; the Mojave staging/rehearsal discoveries supply what that language means in this world. TownSquare hints at the adaptation rather than explaining or spoiling it.
+INSTALL
+Upload the included js folder to the root of the TownSquare GitHub repository and replace js/townsquare.js.
+No HTML, CSS, image, profile, event, ticket, logo, or other files are changed by this package.

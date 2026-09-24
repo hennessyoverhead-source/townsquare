@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
       comment('Benvolio','Merc.',{reply:true}),
       comment('Mercutio','what',{reply:true}),
       comment('Peter','I don\'t know what happened but I support Benvolio.',{reply:true}),
-      comment('Lord Capulet','For Christ\'s sake.',{reply:true})
+      comment('Lord Capulet','Not again.',{reply:true})
     ],
     lordWeather:[
       comment('Lady Capulet','7!!! ❤️❤️❤️'),
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
       comment('Tybalt','Always do.',{reply:true}),
       comment('Mercutio','does lord c have to come pick you up every time you get banned or is there like a shuttle',{reply:true}),
       comment('Tybalt','This comment was removed for violating TownSquare\'s Terms of Service.',{reply:true,deleted:true}),
-      comment('Lord Capulet','For Christ\'s sake.',{reply:true})
+      comment('Lord Capulet','Not again.',{reply:true})
     ]
   };
 
@@ -274,4 +274,52 @@ document.addEventListener('DOMContentLoaded', () => {
       body.appendChild(sec);
     }
   }
+});
+
+
+/* Update 23 — universal Photos-section full-image viewer. */
+document.addEventListener('DOMContentLoaded', () => {
+  const candidates=[...document.querySelectorAll('.photo-grid img, #photos img, [data-tab-panel="photos"] img, .photos-grid img')]
+    .filter((img,index,arr)=>arr.indexOf(img)===index)
+    .filter(img=>{
+      const src=(img.currentSrc||img.src||'').toLowerCase();
+      return src && !src.includes('placeholder') && !src.endsWith('.svg');
+    });
+  if(!candidates.length) return;
+
+  const style=document.createElement('style');
+  style.textContent=`
+    .ts-photo-viewable{cursor:zoom-in}
+    .ts-photo-lightbox[hidden]{display:none!important}
+    .ts-photo-lightbox{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:54px 64px 42px}
+    .ts-photo-lightbox-image{display:block;max-width:100%;max-height:calc(100vh - 96px);width:auto;height:auto;object-fit:contain;box-shadow:0 8px 40px rgba(0,0,0,.45)}
+    .ts-photo-lightbox-close,.ts-photo-lightbox-prev,.ts-photo-lightbox-next{position:fixed;border:0;background:rgba(0,0,0,.38);color:#fff;cursor:pointer;z-index:10001;font-family:Arial,sans-serif}
+    .ts-photo-lightbox-close{right:18px;top:14px;width:44px;height:44px;border-radius:50%;font-size:32px;line-height:40px}
+    .ts-photo-lightbox-prev,.ts-photo-lightbox-next{top:50%;transform:translateY(-50%);width:48px;height:64px;border-radius:8px;font-size:40px;line-height:60px}
+    .ts-photo-lightbox-prev{left:10px}.ts-photo-lightbox-next{right:10px}
+    .ts-photo-lightbox button:hover,.ts-photo-lightbox button:focus{background:rgba(255,255,255,.18);outline:2px solid rgba(255,255,255,.65)}
+    @media(max-width:700px){.ts-photo-lightbox{padding:54px 10px 24px}.ts-photo-lightbox-image{max-height:calc(100vh - 78px)}.ts-photo-lightbox-prev,.ts-photo-lightbox-next{width:38px;height:54px;font-size:30px;background:rgba(0,0,0,.5)}}
+  `;
+  document.head.appendChild(style);
+
+  const overlay=document.createElement('div');
+  overlay.className='ts-photo-lightbox';overlay.hidden=true;
+  overlay.setAttribute('role','dialog');overlay.setAttribute('aria-modal','true');overlay.setAttribute('aria-label','Full photo viewer');
+  overlay.innerHTML='<button class="ts-photo-lightbox-close" type="button" aria-label="Close photo">×</button><button class="ts-photo-lightbox-prev" type="button" aria-label="Previous photo">‹</button><img class="ts-photo-lightbox-image" alt=""><button class="ts-photo-lightbox-next" type="button" aria-label="Next photo">›</button>';
+  document.body.appendChild(overlay);
+  const full=overlay.querySelector('.ts-photo-lightbox-image');
+  const closeBtn=overlay.querySelector('.ts-photo-lightbox-close');
+  const prevBtn=overlay.querySelector('.ts-photo-lightbox-prev');
+  const nextBtn=overlay.querySelector('.ts-photo-lightbox-next');
+  let current=0,lastFocus=null;
+
+  const render=()=>{const source=candidates[current];full.src=source.dataset.full||source.currentSrc||source.src;full.alt=source.alt||'Photo';const multi=candidates.length>1;prevBtn.hidden=!multi;nextBtn.hidden=!multi;};
+  const open=n=>{current=n;lastFocus=document.activeElement;render();overlay.hidden=false;document.body.style.overflow='hidden';closeBtn.focus();};
+  const close=()=>{overlay.hidden=true;document.body.style.overflow='';full.removeAttribute('src');if(lastFocus&&lastFocus.focus)lastFocus.focus();};
+  const move=d=>{current=(current+d+candidates.length)%candidates.length;render();};
+
+  candidates.forEach((img,n)=>{img.classList.add('ts-photo-viewable');img.tabIndex=0;img.setAttribute('role','button');img.setAttribute('aria-label',(img.alt||'Photo')+' — open full image');img.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();open(n)});img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(n)}})});
+  closeBtn.addEventListener('click',close);prevBtn.addEventListener('click',()=>move(-1));nextBtn.addEventListener('click',()=>move(1));
+  overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
+  document.addEventListener('keydown',e=>{if(overlay.hidden)return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)});
 });
