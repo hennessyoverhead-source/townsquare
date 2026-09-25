@@ -15,3 +15,6 @@ PRESERVED FROM UPDATE 25
 UPLOAD
 Upload the CONTENTS of this ZIP to the root of the TownSquare GitHub Pages repository, preserving the folder structure and replacing files when prompted.
 - Update 26: Apothecary is fully hidden/removed from the public build until a new profile photo is ready.
+
+
+Update 27: Removed the black background/border around the sponsored ticket JPEG so the poster area matches the site background.

@@ -14,3 +14,6 @@ This baseline includes:
 
 After GitHub Pages deploys, hard-refresh with Shift+Command+R in Chrome.
 - Update 26: Apothecary is fully hidden/removed from the public build until a new profile photo is ready.
+
+
+Update 27: Removed the black background/border around the sponsored ticket JPEG so the poster area matches the site background.

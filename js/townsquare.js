@@ -432,8 +432,8 @@ document.addEventListener('DOMContentLoaded', () => {
     .ts-sponsored-head small{display:block;color:#65676b;font-size:12px;margin-top:2px}
     .ts-sponsored-ticket-ad>p{padding:4px 16px 12px;margin:0;line-height:1.4}
     .ts-sponsored-ticket-ad>p span{color:#65676b}
-    .ts-sponsored-poster{display:block;background:#111;text-align:center}
-    .ts-sponsored-poster img{display:block;width:min(100%,520px);max-height:560px;object-fit:contain;margin:0 auto;background:#111}
+    .ts-sponsored-poster{display:block;background:transparent;text-align:center}
+    .ts-sponsored-poster img{display:block;width:min(100%,520px);max-height:560px;object-fit:contain;margin:0 auto;background:transparent}
     .ts-sponsored-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;background:#f0f2f5}
     .ts-sponsored-cta div{min-width:0}.ts-sponsored-cta small{display:block;color:#65676b;font-size:11px}.ts-sponsored-cta strong{display:block;margin-top:2px}
     .ts-sponsored-cta>a{flex:0 0 auto;background:#e4e6eb;border-radius:6px;padding:9px 14px;font-weight:700;color:#050505}

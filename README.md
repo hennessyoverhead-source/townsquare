@@ -7,3 +7,6 @@ Adds:
 
 Upload the CONTENTS of this package to the ROOT of the existing `townsquare` repository and replace existing files when GitHub asks.
 - Update 26: Apothecary is fully hidden/removed from the public build until a new profile photo is ready.
+
+
+Update 27: Removed the black background/border around the sponsored ticket JPEG so the poster area matches the site background.
