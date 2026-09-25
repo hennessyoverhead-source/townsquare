@@ -10,3 +10,5 @@ Upload the CONTENTS of this package to the ROOT of the existing `townsquare` rep
 
 
 Update 27: Removed the black background/border around the sponsored ticket JPEG so the poster area matches the site background.
+
+Update 28: Adjusted Montague's Auto Repair hero photo framing to anchor the image at the top, keeping Romeo's full head visible in the cover area.

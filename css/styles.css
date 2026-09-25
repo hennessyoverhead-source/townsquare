@@ -286,3 +286,6 @@ body:has(.business-shell) .business-shell{clear:both}
   .ts-modern .personal-details-card .detail-icon{width:24px;height:24px}
   .ts-modern .personal-details-card .detail-icon img{width:22px;height:22px}
 }
+
+/* Update 28 — keep the full top of the Montague's crew photo visible so Romeo's head is not cropped. */
+body:has(.business-shell) .business-cover>img{object-position:center top}
