@@ -180,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
       comment('Peter','Fair point.',{reply:true})
     ],
     lordParty:[
+      comment('Rosaline',"Can't make it. 😭 I am genuinely disappointed. Have fun without me."),
       comment('Peter','I was told there would be food and have chosen not to ask any further questions.'),
       comment('Nurse','There had better be dancing.'),
       comment('Lady Capulet','SO excited for this!! ✨🥂 The house is going to look AMAZING. #CapuletParty #MojaveNights #Blessed'),
@@ -492,5 +493,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const img=(link&&link.querySelector('img')) || block.querySelector('img');
       if(img) img.src=src;
     });
+  });
+});
+
+
+/* Update 26 — Rosaline's party disappointment belongs on Lord C's event discussion, not as a standalone profile post. */
+document.addEventListener('DOMContentLoaded',()=>{
+  if(!location.pathname.includes('/profiles/rosaline/')) return;
+  document.querySelectorAll('.post').forEach(post=>{
+    if((post.textContent||'').includes("Can't make the Capulet party.")) post.remove();
   });
 });
