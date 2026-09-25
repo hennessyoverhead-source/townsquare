@@ -1,20 +1,18 @@
-TownSquare Update 26 — CUMULATIVE
+TownSquare Update 25 — Rosaline + Global Profile Navigation/Avatar Fix
+Built for the current cumulative Update 24 public-launch baseline.
 
-This is a rebuilt full-site cumulative package. It restores the complete TownSquare baseline and applies Updates/Fixes 01 through 25 in sequence, then adds Update 26.
+INSTALL:
+Upload the CONTENTS of this ZIP to the repository root and replace matching files.
 
-UPDATE 26
-- Replaces the main hero/cover photograph at the top of Montague's Auto Repair with the newly supplied real crew photograph.
-- Updates the clickable photo tags for the new left-to-right arrangement: Benvolio, Romeo, Mercutio.
-- The existing shop post and Photos-tab image remain unchanged; only the main photo at the top of the shop page was requested for replacement.
-
-PRESERVED FROM UPDATE 25
-- Ticket ad compressed/smaller and limited to selected profiles.
-- Mayor Escalus comments on Romeo and Lord Capulet.
-- Romeo videos use browser-compatible MP4 versions.
-
-UPLOAD
-Upload the CONTENTS of this ZIP to the root of the TownSquare GitHub Pages repository, preserving the folder structure and replacing files when prompted.
-- Update 26: Apothecary is fully hidden/removed from the public build until a new profile photo is ready.
-
-
-Update 27: Removed the black background/border around the sponsored ticket JPEG so the poster area matches the site background.
+CHANGES:
+- Adds Rosaline profile.
+- Rosaline profile photo uses the trailer image; banner uses the turquoise-glasses close-up, centered for the wide crop.
+- Rosaline has exactly one friend: Romeo Montague.
+- Romeo now lists Rosaline as a friend; Romeo's visible friend count is 4.
+- Rosaline is disappointed she cannot attend the Capulet party.
+- Tagline: "I don't have much to say, other than I love abs! 😍"
+- Adds Rosaline to People of Mojave and TownSquare search.
+- Global fix: See all friends / See all photos opens the same profile panel as the corresponding top tab.
+- Global fix: Friends/Photos card headings are keyboard/click navigable to those panels.
+- Global avatar audit: canonical real profile images replace stale placeholders wherever built-out characters appear in Friends cards, posts, comments, and replies.
+- Preserves Update 23/24 photo lightbox, sponsored ticket ad, public placeholder cleanup, Escalus material, Romeo videos, and Lord C "Not again."
