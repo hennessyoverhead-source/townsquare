@@ -336,3 +336,92 @@ document.addEventListener('DOMContentLoaded', () => {
   overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
   document.addEventListener('keydown',e=>{if(overlay.hidden)return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)});
 });
+
+/* Update 24 Public Launch Pass — real-media cleanup + sponsored ticket placement. */
+document.addEventListener('DOMContentLoaded', () => {
+  const root = (() => {
+    const p = location.pathname;
+    if (p.includes('/profiles/') || p.includes('/businesses/') || p.includes('/events/')) return '../../';
+    return './';
+  })();
+
+  // Public-facing cleanup: remove unfinished placeholder photo tiles and friend cards.
+  document.querySelectorAll('.photo-grid, .photos-grid').forEach(grid => {
+    [...grid.children].forEach(item => {
+      const img = item.matches?.('img') ? item : item.querySelector?.('img');
+      const src = (img?.getAttribute('src') || '').toLowerCase();
+      const label = (item.textContent || '').toLowerCase();
+      if (src.includes('placeholder') || label.includes('placeholder')) item.remove();
+    });
+    if (!grid.querySelector('img')) {
+      const card = grid.closest('.modern-card,.card');
+      if (card) card.hidden = true;
+    }
+  });
+
+  document.querySelectorAll('.modern-friends-grid').forEach(grid => {
+    [...grid.children].forEach(card => {
+      const img = card.querySelector('img');
+      const src = (img?.getAttribute('src') || '').toLowerCase();
+      const label = (card.textContent || '').toLowerCase();
+      if (src.includes('friend-placeholder') || label.includes('placeholder')) card.remove();
+    });
+    if (!grid.children.length) {
+      const card = grid.closest('.modern-card,.card');
+      if (card) card.hidden = true;
+    }
+  });
+
+  // If a dedicated Photos/Friends panel has no real public content, remove its tab too.
+  ['photos','friends'].forEach(id => {
+    const panel = document.getElementById(id);
+    if (!panel) return;
+    const selector = id === 'photos' ? '.photo-grid img,.photos-grid img' : '.modern-friends-grid .modern-friend';
+    if (!panel.querySelector(selector)) {
+      panel.hidden = true;
+      document.querySelectorAll(`.tab[data-tab="${id}"]`).forEach(tab => tab.remove());
+    }
+  });
+
+  // TownSquare sponsored show-ticket ad. Poster and button both go to the live ticket page.
+  const ticketUrl = 'https://ci.ovationtix.com/35985/production/1291112';
+  const makeAd = () => {
+    const ad = document.createElement('article');
+    ad.className = 'modern-card card ts-sponsored-ticket-ad';
+    ad.innerHTML = `
+      <div class="ts-sponsored-head"><div><b>Joshua Tree Shakespeare Company</b><small>Sponsored · 🌐</small></div></div>
+      <p><b>Romeo &amp; Juliet: A Mojave Reimagining</b><br>Falling in love for the first time… again.<br><span>October 9–18 · Theatre 29</span></p>
+      <a class="ts-sponsored-poster" href="${ticketUrl}" target="_blank" rel="noopener" aria-label="Get tickets for Romeo & Juliet: A Mojave Reimagining"><img src="${root}assets/show-ticket-poster.jpg" alt="Romeo & Juliet: A Mojave Reimagining — October 9–18, 2026 at Theatre 29"></a>
+      <div class="ts-sponsored-cta"><div><small>THEATRE 29 · TWENTYNINE PALMS</small><strong>Romeo &amp; Juliet: A Mojave Reimagining</strong></div><a href="${ticketUrl}" target="_blank" rel="noopener">Get Tickets</a></div>`;
+    return ad;
+  };
+
+  const css = document.createElement('style');
+  css.textContent = `
+    .ts-sponsored-ticket-ad{overflow:hidden;padding:0!important}
+    .ts-sponsored-head{padding:14px 16px 4px;display:flex;align-items:center;gap:10px}
+    .ts-sponsored-head small{display:block;color:#65676b;font-size:12px;margin-top:2px}
+    .ts-sponsored-ticket-ad>p{padding:4px 16px 12px;margin:0;line-height:1.4}
+    .ts-sponsored-ticket-ad>p span{color:#65676b}
+    .ts-sponsored-poster{display:block;background:#111;text-align:center}
+    .ts-sponsored-poster img{display:block;width:100%;max-height:680px;object-fit:contain;margin:0 auto;background:#111}
+    .ts-sponsored-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;background:#f0f2f5}
+    .ts-sponsored-cta div{min-width:0}.ts-sponsored-cta small{display:block;color:#65676b;font-size:11px}.ts-sponsored-cta strong{display:block;margin-top:2px}
+    .ts-sponsored-cta>a{flex:0 0 auto;background:#e4e6eb;border-radius:6px;padding:9px 14px;font-weight:700;color:#050505}
+    .ts-sponsored-cta>a:hover{background:#d8dadf}
+    @media(max-width:600px){.ts-sponsored-cta{align-items:flex-start;flex-direction:column}.ts-sponsored-cta>a{width:100%;text-align:center}.ts-sponsored-poster img{max-height:72vh}}
+  `;
+  document.head.appendChild(css);
+
+  if (location.pathname.includes('/profiles/')) {
+    const feed = document.querySelector('#all .feed');
+    if (feed && !feed.querySelector('.ts-sponsored-ticket-ad')) {
+      const ad = makeAd();
+      const posts = feed.querySelectorAll('.post,.modern-card');
+      if (posts.length > 1) posts[1].insertAdjacentElement('afterend', ad); else feed.appendChild(ad);
+    }
+  } else if (!location.pathname.includes('/businesses/') && !location.pathname.includes('/events/')) {
+    const hero = document.querySelector('.hero');
+    if (hero && !document.querySelector('.ts-sponsored-ticket-ad')) hero.insertAdjacentElement('afterend', makeAd());
+  }
+});
