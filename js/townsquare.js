@@ -64,7 +64,7 @@ document.addEventListener('keydown',e=>{
 });
 })();
 // TownSquare profile search
-const townSquareProfiles=[{name:"Romeo Montague",url:"/profiles/romeo-montague/"},{name:"Benvolio",url:"/profiles/benvolio/"},{name:"Mercutio",url:"/profiles/mercutio/"},{name:"The Apothecary",url:"/profiles/apothecary/"},{name:"Mayor Escalus",url:"/profiles/mayor-escalus/"}];
+const townSquareProfiles=[{name:"Romeo Montague",url:"/profiles/romeo-montague/"},{name:"Benvolio",url:"/profiles/benvolio/"},{name:"Mercutio",url:"/profiles/mercutio/"},{name:"Mayor Escalus",url:"/profiles/mayor-escalus/"}];
 document.querySelectorAll('.search').forEach(input=>{input.addEventListener('keydown',e=>{if(e.key==='Enter'){const q=input.value.trim().toLowerCase();const hit=townSquareProfiles.find(p=>p.name.toLowerCase().includes(q));if(hit){const base=location.hostname.includes('github.io')?'/townsquare':'';location.href=base+hit.url;}}});});
 
 // TownSquare business search augmentation
@@ -99,8 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'Romeo': {url:'profiles/romeo-montague/', img:'assets/romeo-profile.jpg'},
     'Benvolio': {url:'profiles/benvolio/', img:'assets/benvolio-profile.jpg'},
     'Mercutio': {url:'profiles/mercutio/', img:'assets/mercutio-profile.jpg'},
-    'The Apothecary': {url:'profiles/apothecary/', img:'assets/apothecary-profile.jpg'},
-    'Apothecary': {url:'profiles/apothecary/', img:'assets/apothecary-profile.jpg'},
     'Lord Capulet': {url:'profiles/lord-capulet/', img:'assets/lord-capulet-profile.jpg'},
     'Mayor Escalus': {url:'profiles/mayor-escalus/', img:'assets/mayor-escalus-profile.jpg'}
   };
@@ -169,12 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ],
     apothLavender:[
       comment('Lawrence','Save me a bundle. I may have a use for it.'),
-      comment('The Apothecary','You always do.',{reply:true}),
       comment('Nurse','Put one aside for me too, please.')
     ],
     apothPrivate:[
       comment('Nurse','Private order? Now you have me curious.'),
-      comment('The Apothecary','That is why it is called private.',{reply:true}),
       comment('Peter','Fair point.',{reply:true})
     ],
     lordParty:[
@@ -382,6 +378,39 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll(`.tab[data-tab="${id}"]`).forEach(tab => tab.remove());
     }
   });
+  // Update 26: Apothecary profile and all public links/search entries are removed for now.
+
+  // Update 25: Mayor Escalus joins the conversation on Romeo and Capulet's profiles.
+  const addEscalusComment = (post, text) => {
+    if (!post || post.querySelector('.ts-escalus-comment[data-text="' + text.replace(/"/g, '&quot;') + '"]')) return;
+    let comments = post.querySelector('.comments');
+    if (!comments) {
+      comments = document.createElement('div');
+      comments.className = 'comments';
+      post.appendChild(comments);
+    }
+    const c = document.createElement('div');
+    c.className = 'comment ts-escalus-comment';
+    c.dataset.text = text;
+    c.innerHTML = `<a href="../mayor-escalus/"><img src="${root}assets/mayor-escalus-profile.jpg" alt="Mayor Escalus"></a><div><a href="../mayor-escalus/"><b>Mayor Escalus</b></a><p></p><small>Like · Reply</small></div>`;
+    c.querySelector('p').textContent = text;
+    comments.appendChild(c);
+  };
+  const profileSlug = (location.pathname.match(/\/profiles\/([^/]+)\/?/) || [])[1] || '';
+  if (profileSlug === 'romeo-montague') {
+    document.querySelectorAll('.feed').forEach(feed => {
+      const posts = feed.querySelectorAll('.post');
+      addEscalusComment(posts[0], 'Romeo, I am asking everyone in both families to keep things calm. Please help me out here.');
+      addEscalusComment(posts[1] || posts[0], 'I would prefer not to learn about another Montague incident through TownSquare.');
+    });
+  }
+  if (profileSlug === 'lord-capulet' || profileSlug === 'capulet') {
+    document.querySelectorAll('.feed').forEach(feed => {
+      const posts = feed.querySelectorAll('.post');
+      addEscalusComment(posts[0], 'Cap, I appreciate everything you do for this town. I would appreciate one quiet weekend even more.');
+      addEscalusComment(posts[1] || posts[0], 'Call me when you have a minute. Preferably before this becomes a matter for the Chief.');
+    });
+  }
 
   // TownSquare sponsored show-ticket ad. Poster and button both go to the live ticket page.
   const ticketUrl = 'https://ci.ovationtix.com/35985/production/1291112';
@@ -404,18 +433,20 @@ document.addEventListener('DOMContentLoaded', () => {
     .ts-sponsored-ticket-ad>p{padding:4px 16px 12px;margin:0;line-height:1.4}
     .ts-sponsored-ticket-ad>p span{color:#65676b}
     .ts-sponsored-poster{display:block;background:#111;text-align:center}
-    .ts-sponsored-poster img{display:block;width:100%;max-height:680px;object-fit:contain;margin:0 auto;background:#111}
+    .ts-sponsored-poster img{display:block;width:min(100%,520px);max-height:560px;object-fit:contain;margin:0 auto;background:#111}
     .ts-sponsored-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;background:#f0f2f5}
     .ts-sponsored-cta div{min-width:0}.ts-sponsored-cta small{display:block;color:#65676b;font-size:11px}.ts-sponsored-cta strong{display:block;margin-top:2px}
     .ts-sponsored-cta>a{flex:0 0 auto;background:#e4e6eb;border-radius:6px;padding:9px 14px;font-weight:700;color:#050505}
     .ts-sponsored-cta>a:hover{background:#d8dadf}
-    @media(max-width:600px){.ts-sponsored-cta{align-items:flex-start;flex-direction:column}.ts-sponsored-cta>a{width:100%;text-align:center}.ts-sponsored-poster img{max-height:72vh}}
+    @media(max-width:600px){.ts-sponsored-cta{align-items:flex-start;flex-direction:column}.ts-sponsored-cta>a{width:100%;text-align:center}.ts-sponsored-poster img{width:min(100%,440px);max-height:62vh}}
   `;
   document.head.appendChild(css);
 
   if (location.pathname.includes('/profiles/')) {
+    // Show the sponsored ticket card on roughly half the character profiles, not every profile.
+    const adProfiles = new Set(['romeo-montague','lawrence','benvolio','lord-capulet','nurse','mayor-escalus','paris','samson']);
     const feed = document.querySelector('#all .feed');
-    if (feed && !feed.querySelector('.ts-sponsored-ticket-ad')) {
+    if (adProfiles.has(profileSlug) && feed && !feed.querySelector('.ts-sponsored-ticket-ad')) {
       const ad = makeAd();
       const posts = feed.querySelectorAll('.post,.modern-card');
       if (posts.length > 1) posts[1].insertAdjacentElement('afterend', ad); else feed.appendChild(ad);

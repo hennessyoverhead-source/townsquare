@@ -1,24 +1,17 @@
-TownSquare Update 24 — CUMULATIVE PUBLIC-LAUNCH BUILD
-September 24, 2026
+TownSquare Update 26 — CUMULATIVE
 
-Baseline: Version 23. This package contains every TownSquare change discussed since Version 23, so install this single ZIP over the current Version 23 repository.
+This is a rebuilt full-site cumulative package. It restores the complete TownSquare baseline and applies Updates/Fixes 01 through 25 in sequence, then adds Update 26.
 
-INCLUDED
-- Mayor Escalus full profile built from the supplied character questionnaire.
-- Mayor Escalus real profile, cover, and gallery photography.
-- Mayor Escalus added to People of Mojave and TownSquare search.
-- Sparse, consequential Escalus comments/interventions added to the character ecosystem.
-- Romeo's four supplied MOV clips added to his Videos section.
-- Romeo's new yellow-glasses still is his definitive profile/avatar image.
-- Both newly supplied Romeo stills added to Photos; source screenshots are cropped to the actual photographs for display.
-- Public-facing placeholder cleanup: placeholder Photos tiles and placeholder Friends cards are removed globally at runtime; empty dedicated Photos/Friends tabs are suppressed.
-- Sponsored Joshua Tree Shakespeare Company ticket ad added to TownSquare profile feeds and the landing experience.
-- Ticket poster is cropped from the supplied screenshot so phone/app chrome is not shown in the ad.
-- Poster and Get Tickets CTA link to the existing OvationTix production page.
-- Version 23 photo lightbox behavior remains included.
-- Lord Capulet's line remains “Not again.”
+UPDATE 26
+- Replaces the main hero/cover photograph at the top of Montague's Auto Repair with the newly supplied real crew photograph.
+- Updates the clickable photo tags for the new left-to-right arrangement: Benvolio, Romeo, Mercutio.
+- The existing shop post and Photos-tab image remain unchanged; only the main photo at the top of the shop page was requested for replacement.
 
-INSTALL
-Upload/merge the contents of this ZIP into the repository root, preserving folders, and replace files when GitHub prompts. Commit, wait for Pages to deploy, then hard-refresh.
+PRESERVED FROM UPDATE 25
+- Ticket ad compressed/smaller and limited to selected profiles.
+- Mayor Escalus comments on Romeo and Lord Capulet.
+- Romeo videos use browser-compatible MP4 versions.
 
-This is a patch package, not a complete copy of the entire TownSquare repository. Files not present here are intentionally left untouched.
+UPLOAD
+Upload the CONTENTS of this ZIP to the root of the TownSquare GitHub Pages repository, preserving the folder structure and replacing files when prompted.
+- Update 26: Apothecary is fully hidden/removed from the public build until a new profile photo is ready.

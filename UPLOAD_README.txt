@@ -10,8 +10,7 @@ This baseline includes:
 - Two authored comments remain visible as the preview when available.
 - Clicking the count or "View all" expands the thread to the full displayed comment count.
 - "Hide comments" collapses the additional thread.
-- Romeo's Friends includes Benvolio, Mercutio, and the Apothecary.
-- Apothecary remains off the landing page.
 - Existing profile tab navigation fix is preserved.
 
 After GitHub Pages deploys, hard-refresh with Shift+Command+R in Chrome.
+- Update 26: Apothecary is fully hidden/removed from the public build until a new profile photo is ready.
