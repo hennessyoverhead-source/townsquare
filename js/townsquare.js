@@ -64,7 +64,7 @@ document.addEventListener('keydown',e=>{
 });
 })();
 // TownSquare profile search
-const townSquareProfiles=[{name:"Romeo Montague",url:"/profiles/romeo-montague/"},{name:"Benvolio",url:"/profiles/benvolio/"},{name:"Mercutio",url:"/profiles/mercutio/"},{name:"The Apothecary",url:"/profiles/apothecary/"}];
+const townSquareProfiles=[{name:"Romeo Montague",url:"/profiles/romeo-montague/"},{name:"Benvolio",url:"/profiles/benvolio/"},{name:"Mercutio",url:"/profiles/mercutio/"},{name:"The Apothecary",url:"/profiles/apothecary/"},{name:"Mayor Escalus",url:"/profiles/mayor-escalus/"}];
 document.querySelectorAll('.search').forEach(input=>{input.addEventListener('keydown',e=>{if(e.key==='Enter'){const q=input.value.trim().toLowerCase();const hit=townSquareProfiles.find(p=>p.name.toLowerCase().includes(q));if(hit){const base=location.hostname.includes('github.io')?'/townsquare':'';location.href=base+hit.url;}}});});
 
 // TownSquare business search augmentation
@@ -95,13 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   const people = {
-    'Romeo Montague': {url:'profiles/romeo-montague/', img:'assets/romeo-profile.svg'},
-    'Romeo': {url:'profiles/romeo-montague/', img:'assets/romeo-profile.svg'},
+    'Romeo Montague': {url:'profiles/romeo-montague/', img:'assets/romeo-profile.jpg'},
+    'Romeo': {url:'profiles/romeo-montague/', img:'assets/romeo-profile.jpg'},
     'Benvolio': {url:'profiles/benvolio/', img:'assets/benvolio-profile.jpg'},
     'Mercutio': {url:'profiles/mercutio/', img:'assets/mercutio-profile.jpg'},
     'The Apothecary': {url:'profiles/apothecary/', img:'assets/apothecary-profile.jpg'},
     'Apothecary': {url:'profiles/apothecary/', img:'assets/apothecary-profile.jpg'},
-    'Lord Capulet': {url:'profiles/lord-capulet/', img:'assets/lord-capulet-profile.jpg'}
+    'Lord Capulet': {url:'profiles/lord-capulet/', img:'assets/lord-capulet-profile.jpg'},
+    'Mayor Escalus': {url:'profiles/mayor-escalus/', img:'assets/mayor-escalus-profile.jpg'}
   };
   const placeholder = root+'assets/friend-placeholder.svg';
   const avatarFor = name => people[name]?.img ? root+people[name].img : placeholder;
@@ -141,7 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
       comment('Benvolio','Merc.'),
       comment('Mercutio','what',{reply:true}),
       comment('Tybalt','This comment was removed for violating TownSquare\'s Terms of Service.',{reply:true,deleted:true}),
-      comment('Mercutio','and there it is',{reply:true})
+      comment('Mercutio','and there it is',{reply:true}),
+      comment('Mayor Escalus','Enough. All of you.')
     ],
     benReasonable:[
       comment('Mercutio','boring. do something irresponsible'),
@@ -156,7 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     romeoDistance:[
       comment('Benvolio','You know where to find us.'),
       comment('Mercutio','bro discovered distance 💀'),
-      comment('Nurse','Go to bed, Romeo.')
+      comment('Nurse','Go to bed, Romeo.'),
+      comment('Mayor Escalus','Mojave has a way of doing that.')
     ],
     romeoShop:[
       comment('Mercutio','skill issue'),
@@ -186,7 +189,15 @@ document.addEventListener('DOMContentLoaded', () => {
       comment('Benvolio','Merc.',{reply:true}),
       comment('Mercutio','what',{reply:true}),
       comment('Peter','I don\'t know what happened but I support Benvolio.',{reply:true}),
-      comment('Lord Capulet','Not again.',{reply:true})
+      comment('Lord Capulet','Not again.',{reply:true}),
+      comment('Mayor Escalus','Enjoy yourselves. Keep it civil.')
+    ],
+    mayorTogether:[
+      comment('Lawrence','A useful reminder.'),
+      comment('Cop','Agreed.')
+    ],
+    mayorService:[
+      comment('Lawrence','Listening is rarer than it should be.')
     ],
     lordWeather:[
       comment('Lady Capulet','7!!! ❤️❤️❤️'),
@@ -223,6 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if(txt.includes('fresh desert lavender')) return C.apothLavender;
     if(txt.includes('private order')) return C.apothPrivate;
     if(txt.includes('party preparations are underway')) return C.lordParty;
+    if(txt.includes('we do not have to agree on everything')) return C.mayorTogether;
+    if(txt.includes('public service is not about being the loudest')) return C.mayorService;
     if(txt.includes('weather checked. whiskey stocked')) return C.lordWeather;
     return null;
   }

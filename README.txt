@@ -1,26 +1,15 @@
-TownSquare Scrub — Version 23
-September 24, 2026
+TownSquare Update 24 — Mayor Escalus + Romeo Media
+Built on the live Version 23 baseline.
 
-BUILT DIRECTLY ON VERSION 22.
+UPLOAD the contents of this ZIP to the ROOT of the townsquare GitHub repository and replace files when prompted.
 
-CHANGES
-1. GLOBAL PHOTO VIEWER
-   - Real photos in every profile Photos section are now clickable/tappable.
-   - Opens the full image in a Facebook-style dark lightbox.
-   - Full image is shown uncropped and scaled to fit the browser window.
-   - Close with X, click/tap outside the photo, or Escape.
-   - Left/right arrows and keyboard arrows move through multiple photos.
-   - Mobile responsive.
-   - Placeholder/SVG images are intentionally excluded.
-   - The behavior is selector-based so future real photos added to standard Photos grids inherit it automatically.
+Adds:
+- Full Mayor Escalus profile grounded in the supplied actor questionnaire.
+- Mayor Escalus profile/cover/gallery images from the supplied rehearsal stills.
+- Mayor Escalus to the People of Mojave landing page and TownSquare search.
+- Sparse Mayor Escalus comments across existing character posts, consistent with his established voice.
+- Romeo's supplied four MOV clips to his Videos tab.
+- Romeo's sunglasses still as his real profile/avatar image, propagated through the landing page and comment system.
+- Romeo's Photos section now contains the real profile still rather than placeholders.
 
-2. LORD CAPULET / TYBALT COPY
-   - Changed both Lord Capulet instances of “For Christ's sake.” to “Not again.”
-   - This includes the party thread and the Tybalt/shuttle exchange.
-
-FILES CHANGED
-- js/townsquare.js ONLY
-
-INSTALL
-Upload the included js folder to the root of the TownSquare GitHub repository and replace js/townsquare.js.
-No HTML, CSS, image, profile, event, ticket, logo, or other files are changed by this package.
+Preserves Version 23 photo lightbox behavior and Lord Capulet “Not again.” wording.
