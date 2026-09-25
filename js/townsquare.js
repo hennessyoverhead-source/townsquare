@@ -65,7 +65,7 @@ document.addEventListener('keydown',e=>{
 });
 })();
 // TownSquare profile search
-const townSquareProfiles=[{name:"Romeo Montague",url:"/profiles/romeo-montague/"},{name:"Benvolio",url:"/profiles/benvolio/"},{name:"Mercutio",url:"/profiles/mercutio/"},{name:"The Apothecary",url:"/profiles/apothecary/"},{name:"Mayor Escalus",url:"/profiles/mayor-escalus/"},{name:"Rosaline",url:"/profiles/rosaline/"}];
+const townSquareProfiles=[{name:"Romeo Montague",url:"/profiles/romeo-montague/"},{name:"Benvolio",url:"/profiles/benvolio/"},{name:"Mercutio",url:"/profiles/mercutio/"},{name:"The Apothecary",url:"/profiles/apothecary/"},{name:"Mayor Escalus",url:"/profiles/mayor-escalus/"}];
 document.querySelectorAll('.search').forEach(input=>{input.addEventListener('keydown',e=>{if(e.key==='Enter'){const q=input.value.trim().toLowerCase();const hit=townSquareProfiles.find(p=>p.name.toLowerCase().includes(q));if(hit){const base=location.hostname.includes('github.io')?'/townsquare':'';location.href=base+hit.url;}}});});
 
 // TownSquare business search augmentation
@@ -487,11 +487,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (img) img.src = src;
     });
     document.querySelectorAll('.comment,.business-comment,.modern-friend').forEach(block => {
-      const txt=(block.textContent||'').trim().toLowerCase();
-      if (!person.names.some(n => txt.startsWith(n) || txt.includes(n))) return;
-      const link=block.querySelector(`a[href*="${person.slug}"],a[href^="../${person.slug}/"]`);
-      const img=(link&&link.querySelector('img')) || block.querySelector('img');
-      if(img) img.src=src;
+      // Match the card/comment AUTHOR only. Never infer identity from body text
+      // (e.g. Peter saying "I support Benvolio" must remain Peter).
+      const authorEl = block.querySelector('b');
+      const author = (authorEl?.textContent || '').trim().toLowerCase();
+      if (!person.names.includes(author)) return;
+      const img = block.querySelector('img');
+      if (img) img.src = src;
     });
   });
 });
@@ -502,5 +504,17 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(!location.pathname.includes('/profiles/rosaline/')) return;
   document.querySelectorAll('.post').forEach(post=>{
     if((post.textContent||'').includes("Can't make the Capulet party.")) post.remove();
+  });
+});
+
+
+/* Update 27 — Rosaline is an Easter egg reachable only through Romeo's Friends list/tab. */
+document.addEventListener('DOMContentLoaded',()=>{
+  const path=location.pathname.replace(/\/+$/,'/');
+  const isLanding = path==='/' || /\/index\.html$/.test(path);
+  if(!isLanding) return;
+  document.querySelectorAll('a[href*="profiles/rosaline/"]').forEach(a=>{
+    const card=a.closest('.person-card,.character-card,.profile-card,.modern-friend,.card,article,li');
+    if(card) card.remove(); else a.remove();
   });
 });
