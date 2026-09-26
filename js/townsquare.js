@@ -6,8 +6,7 @@ function openTab(id){
   panels.forEach(p=>p.hidden=p.id!==id);
   tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab===id));
   document.querySelectorAll('.profile-more-menu,.tabs-more-menu').forEach(m=>m.hidden=true);
-  const shell=document.querySelector('.modern-profile-shell,.profile-shell');
-  if(shell) window.scrollTo({top:shell.offsetTop,behavior:'smooth'});
+  window.scrollTo({top:document.querySelector('.profile-shell').offsetTop,behavior:'smooth'});
 }
 tabs.forEach(t=>t.addEventListener('click',()=>openTab(t.dataset.tab)));
 document.querySelectorAll('[data-tab-jump]').forEach(b=>b.addEventListener('click',(e)=>{e.preventDefault();openTab(b.dataset.tabJump)}));
@@ -65,7 +64,7 @@ document.addEventListener('keydown',e=>{
 });
 })();
 // TownSquare profile search
-const townSquareProfiles=[{name:"Romeo Montague",url:"/profiles/romeo-montague/"},{name:"Benvolio",url:"/profiles/benvolio/"},{name:"Mercutio",url:"/profiles/mercutio/"},{name:"The Apothecary",url:"/profiles/apothecary/"},{name:"Mayor Escalus",url:"/profiles/mayor-escalus/"}];
+const townSquareProfiles=[{name:"Romeo Montague",url:"/profiles/romeo-montague/"},{name:"Benvolio",url:"/profiles/benvolio/"},{name:"Mercutio",url:"/profiles/mercutio/"},{name:"Mayor Escalus",url:"/profiles/mayor-escalus/"}];
 document.querySelectorAll('.search').forEach(input=>{input.addEventListener('keydown',e=>{if(e.key==='Enter'){const q=input.value.trim().toLowerCase();const hit=townSquareProfiles.find(p=>p.name.toLowerCase().includes(q));if(hit){const base=location.hostname.includes('github.io')?'/townsquare':'';location.href=base+hit.url;}}});});
 
 // TownSquare business search augmentation
@@ -100,11 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'Romeo': {url:'profiles/romeo-montague/', img:'assets/romeo-profile.jpg'},
     'Benvolio': {url:'profiles/benvolio/', img:'assets/benvolio-profile.jpg'},
     'Mercutio': {url:'profiles/mercutio/', img:'assets/mercutio-profile.jpg'},
-    'The Apothecary': {url:'profiles/apothecary/', img:'assets/apothecary-profile.jpg'},
-    'Apothecary': {url:'profiles/apothecary/', img:'assets/apothecary-profile.jpg'},
     'Lord Capulet': {url:'profiles/lord-capulet/', img:'assets/lord-capulet-profile.jpg'},
-    'Mayor Escalus': {url:'profiles/mayor-escalus/', img:'assets/mayor-escalus-profile.jpg'},
-    'Rosaline': {url:'profiles/rosaline/', img:'assets/rosaline-profile.jpg'}
+    'Mayor Escalus': {url:'profiles/mayor-escalus/', img:'assets/mayor-escalus-profile.jpg'}
   };
   const placeholder = root+'assets/friend-placeholder.svg';
   const avatarFor = name => people[name]?.img ? root+people[name].img : placeholder;
@@ -171,16 +167,13 @@ document.addEventListener('DOMContentLoaded', () => {
     ],
     apothLavender:[
       comment('Lawrence','Save me a bundle. I may have a use for it.'),
-      comment('The Apothecary','You always do.',{reply:true}),
       comment('Nurse','Put one aside for me too, please.')
     ],
     apothPrivate:[
       comment('Nurse','Private order? Now you have me curious.'),
-      comment('The Apothecary','That is why it is called private.',{reply:true}),
       comment('Peter','Fair point.',{reply:true})
     ],
     lordParty:[
-      comment('Rosaline',"Can't make it. 😭 I am genuinely disappointed. Have fun without me."),
       comment('Peter','I was told there would be food and have chosen not to ask any further questions.'),
       comment('Nurse','There had better be dancing.'),
       comment('Lady Capulet','SO excited for this!! ✨🥂 The house is going to look AMAZING. #CapuletParty #MojaveNights #Blessed'),
@@ -385,6 +378,39 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll(`.tab[data-tab="${id}"]`).forEach(tab => tab.remove());
     }
   });
+  // Update 26: Apothecary profile and all public links/search entries are removed for now.
+
+  // Update 25: Mayor Escalus joins the conversation on Romeo and Capulet's profiles.
+  const addEscalusComment = (post, text) => {
+    if (!post || post.querySelector('.ts-escalus-comment[data-text="' + text.replace(/"/g, '&quot;') + '"]')) return;
+    let comments = post.querySelector('.comments');
+    if (!comments) {
+      comments = document.createElement('div');
+      comments.className = 'comments';
+      post.appendChild(comments);
+    }
+    const c = document.createElement('div');
+    c.className = 'comment ts-escalus-comment';
+    c.dataset.text = text;
+    c.innerHTML = `<a href="../mayor-escalus/"><img src="${root}assets/mayor-escalus-profile.jpg" alt="Mayor Escalus"></a><div><a href="../mayor-escalus/"><b>Mayor Escalus</b></a><p></p><small>Like · Reply</small></div>`;
+    c.querySelector('p').textContent = text;
+    comments.appendChild(c);
+  };
+  const profileSlug = (location.pathname.match(/\/profiles\/([^/]+)\/?/) || [])[1] || '';
+  if (profileSlug === 'romeo-montague') {
+    document.querySelectorAll('.feed').forEach(feed => {
+      const posts = feed.querySelectorAll('.post');
+      addEscalusComment(posts[0], 'Romeo, I am asking everyone in both families to keep things calm. Please help me out here.');
+      addEscalusComment(posts[1] || posts[0], 'I would prefer not to learn about another Montague incident through TownSquare.');
+    });
+  }
+  if (profileSlug === 'lord-capulet' || profileSlug === 'capulet') {
+    document.querySelectorAll('.feed').forEach(feed => {
+      const posts = feed.querySelectorAll('.post');
+      addEscalusComment(posts[0], 'Cap, I appreciate everything you do for this town. I would appreciate one quiet weekend even more.');
+      addEscalusComment(posts[1] || posts[0], 'Call me when you have a minute. Preferably before this becomes a matter for the Chief.');
+    });
+  }
 
   // TownSquare sponsored show-ticket ad. Poster and button both go to the live ticket page.
   const ticketUrl = 'https://ci.ovationtix.com/35985/production/1291112';
@@ -406,19 +432,21 @@ document.addEventListener('DOMContentLoaded', () => {
     .ts-sponsored-head small{display:block;color:#65676b;font-size:12px;margin-top:2px}
     .ts-sponsored-ticket-ad>p{padding:4px 16px 12px;margin:0;line-height:1.4}
     .ts-sponsored-ticket-ad>p span{color:#65676b}
-    .ts-sponsored-poster{display:block;background:#111;text-align:center}
-    .ts-sponsored-poster img{display:block;width:100%;max-height:680px;object-fit:contain;margin:0 auto;background:#111}
+    .ts-sponsored-poster{display:block;background:transparent;text-align:center}
+    .ts-sponsored-poster img{display:block;width:min(100%,520px);max-height:560px;object-fit:contain;margin:0 auto;background:transparent}
     .ts-sponsored-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;background:#f0f2f5}
     .ts-sponsored-cta div{min-width:0}.ts-sponsored-cta small{display:block;color:#65676b;font-size:11px}.ts-sponsored-cta strong{display:block;margin-top:2px}
     .ts-sponsored-cta>a{flex:0 0 auto;background:#e4e6eb;border-radius:6px;padding:9px 14px;font-weight:700;color:#050505}
     .ts-sponsored-cta>a:hover{background:#d8dadf}
-    @media(max-width:600px){.ts-sponsored-cta{align-items:flex-start;flex-direction:column}.ts-sponsored-cta>a{width:100%;text-align:center}.ts-sponsored-poster img{max-height:72vh}}
+    @media(max-width:600px){.ts-sponsored-cta{align-items:flex-start;flex-direction:column}.ts-sponsored-cta>a{width:100%;text-align:center}.ts-sponsored-poster img{width:min(100%,440px);max-height:62vh}}
   `;
   document.head.appendChild(css);
 
   if (location.pathname.includes('/profiles/')) {
+    // Show the sponsored ticket card on roughly half the character profiles, not every profile.
+    const adProfiles = new Set(['romeo-montague','lawrence','benvolio','lord-capulet','nurse','mayor-escalus','paris','samson']);
     const feed = document.querySelector('#all .feed');
-    if (feed && !feed.querySelector('.ts-sponsored-ticket-ad')) {
+    if (adProfiles.has(profileSlug) && feed && !feed.querySelector('.ts-sponsored-ticket-ad')) {
       const ad = makeAd();
       const posts = feed.querySelectorAll('.post,.modern-card');
       if (posts.length > 1) posts[1].insertAdjacentElement('afterend', ad); else feed.appendChild(ad);
@@ -427,94 +455,4 @@ document.addEventListener('DOMContentLoaded', () => {
     const hero = document.querySelector('.hero');
     if (hero && !document.querySelector('.ts-sponsored-ticket-ad')) hero.insertAdjacentElement('afterend', makeAd());
   }
-});
-
-
-/* Update 25 — universal profile navigation + canonical avatar propagation. */
-document.addEventListener('DOMContentLoaded', () => {
-  const profileRoot = (() => {
-    const p = location.pathname;
-    if (p.includes('/profiles/') || p.includes('/businesses/') || p.includes('/events/')) return '../../';
-    return './';
-  })();
-
-  // Make sidebar section navigation behave exactly like the profile tabs.
-  const openProfileTab = (id) => {
-    const tabs = [...document.querySelectorAll('.tab[data-tab]')];
-    const panels = [...document.querySelectorAll('.tab-panel')];
-    const panel = document.getElementById(id);
-    if (!panel) return false;
-    panels.forEach(p => p.hidden = p.id !== id);
-    tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === id));
-    document.querySelectorAll('.profile-more-menu,.tabs-more-menu').forEach(m => m.hidden = true);
-    const shell = document.querySelector('.modern-profile-shell,.profile-shell');
-    if (shell) shell.scrollIntoView({behavior:'smooth',block:'start'});
-    return true;
-  };
-
-  document.querySelectorAll('.see-all[href^="#"]').forEach(link => {
-    const id = link.getAttribute('href').slice(1);
-    if (!document.getElementById(id)) return;
-    link.addEventListener('click', e => { e.preventDefault(); openProfileTab(id); });
-    const heading = link.closest('h2');
-    if (heading && !heading.dataset.tsSectionNav) {
-      heading.dataset.tsSectionNav = id;
-      heading.style.cursor = 'pointer';
-      heading.setAttribute('role','link');
-      heading.setAttribute('tabindex','0');
-      heading.addEventListener('click', e => { if (e.target.closest('a')) return; openProfileTab(id); });
-      heading.addEventListener('keydown', e => { if (e.key==='Enter' || e.key===' ') { e.preventDefault(); openProfileTab(id); } });
-    }
-  });
-
-  // One canonical real avatar per built-out profile, everywhere that person appears.
-  const canonical = [
-    {slug:'romeo-montague', names:['romeo montague','romeo'], img:'assets/romeo-profile.jpg'},
-    {slug:'benvolio', names:['benvolio'], img:'assets/benvolio-profile.jpg'},
-    {slug:'mercutio', names:['mercutio'], img:'assets/mercutio-profile.jpg'},
-    {slug:'apothecary', names:['the apothecary','apothecary'], img:'assets/apothecary-profile.jpg'},
-    {slug:'lord-capulet', names:['lord capulet','lord c'], img:'assets/lord-capulet-profile.jpg'},
-    {slug:'mayor-escalus', names:['mayor escalus','escalus','mayor'], img:'assets/mayor-escalus-profile.jpg'},
-    {slug:'rosaline', names:['rosaline'], img:'assets/rosaline-profile.jpg'}
-  ];
-  canonical.forEach(person => {
-    const src = profileRoot + person.img;
-    document.querySelectorAll(`a[href*="/profiles/${person.slug}/"],a[href^="../${person.slug}/"],a[href="./"]`).forEach(a => {
-      // ./ only belongs to the current profile; don't rewrite it unless the visible name matches.
-      const txt = (a.textContent || a.querySelector('img')?.alt || '').trim().toLowerCase();
-      if (a.getAttribute('href') === './' && !person.names.some(n => txt.includes(n))) return;
-      const img = a.querySelector('img');
-      if (img) img.src = src;
-    });
-    document.querySelectorAll('.comment,.business-comment,.modern-friend').forEach(block => {
-      // Match the card/comment AUTHOR only. Never infer identity from body text
-      // (e.g. Peter saying "I support Benvolio" must remain Peter).
-      const authorEl = block.querySelector('b');
-      const author = (authorEl?.textContent || '').trim().toLowerCase();
-      if (!person.names.includes(author)) return;
-      const img = block.querySelector('img');
-      if (img) img.src = src;
-    });
-  });
-});
-
-
-/* Update 26 — Rosaline's party disappointment belongs on Lord C's event discussion, not as a standalone profile post. */
-document.addEventListener('DOMContentLoaded',()=>{
-  if(!location.pathname.includes('/profiles/rosaline/')) return;
-  document.querySelectorAll('.post').forEach(post=>{
-    if((post.textContent||'').includes("Can't make the Capulet party.")) post.remove();
-  });
-});
-
-
-/* Update 27 — Rosaline is an Easter egg reachable only through Romeo's Friends list/tab. */
-document.addEventListener('DOMContentLoaded',()=>{
-  const path=location.pathname.replace(/\/+$/,'/');
-  const isLanding = path==='/' || /\/index\.html$/.test(path);
-  if(!isLanding) return;
-  document.querySelectorAll('a[href*="profiles/rosaline/"]').forEach(a=>{
-    const card=a.closest('.person-card,.character-card,.profile-card,.modern-friend,.card,article,li');
-    if(card) card.remove(); else a.remove();
-  });
 });
