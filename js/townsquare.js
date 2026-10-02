@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'Mercutio': {url:'profiles/mercutio/', img:'assets/mercutio-profile.jpg'},
     'The Apothecary': {url:'profiles/apothecary/', img:'assets/apothecary-profile.jpg'},
     'Apothecary': {url:'profiles/apothecary/', img:'assets/apothecary-profile.jpg'},
-    'Lord Capulet': {url:'profiles/lord-capulet/', img:'assets/lord-capulet-profile.jpg'},
+    'Capulet': {url:'profiles/lord-capulet/', img:'assets/lord-capulet-profile.jpg'},
     'Mayor Escalus': {url:'profiles/mayor-escalus/', img:'assets/mayor-escalus-profile.jpg'},
     'Rosaline': {url:'profiles/rosaline/', img:'assets/rosaline-profile.jpg'}
   };
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
       comment('Benvolio','Merc.',{reply:true}),
       comment('Mercutio','what',{reply:true}),
       comment('Peter','I don\'t know what happened but I support Benvolio.',{reply:true}),
-      comment('Lord Capulet','Not again.',{reply:true}),
+      comment('Capulet','Not again.',{reply:true}),
       comment('Mayor Escalus','Enjoy yourselves. Keep it civil.')
     ],
     mayorTogether:[
@@ -206,11 +206,11 @@ document.addEventListener('DOMContentLoaded', () => {
       comment('Lady Capulet','7!!! ❤️❤️❤️'),
       comment('Mercutio','we heard you',{reply:true}),
       comment('Tybalt','I\'ll be there.'),
-      comment('Lord Capulet','Try to stay out of trouble.',{reply:true}),
+      comment('Capulet','Try to stay out of trouble.',{reply:true}),
       comment('Tybalt','Always do.',{reply:true}),
       comment('Mercutio','does lord c have to come pick you up every time you get banned or is there like a shuttle',{reply:true}),
       comment('Tybalt','This comment was removed for violating TownSquare\'s Terms of Service.',{reply:true,deleted:true}),
-      comment('Lord Capulet','Not again.',{reply:true})
+      comment('Capulet','Not again.',{reply:true})
     ]
   };
 
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {slug:'benvolio', names:['benvolio'], img:'assets/benvolio-profile.jpg'},
     {slug:'mercutio', names:['mercutio'], img:'assets/mercutio-profile.jpg'},
     {slug:'apothecary', names:['the apothecary','apothecary'], img:'assets/apothecary-profile.jpg'},
-    {slug:'lord-capulet', names:['lord capulet','lord c'], img:'assets/lord-capulet-profile.jpg'},
+    {slug:'lord-capulet', names:['capulet','lord capulet','lord c'], img:'assets/lord-capulet-profile.jpg'},
     {slug:'mayor-escalus', names:['mayor escalus','escalus','mayor'], img:'assets/mayor-escalus-profile.jpg'},
     {slug:'rosaline', names:['rosaline'], img:'assets/rosaline-profile.jpg'}
   ];
@@ -516,5 +516,22 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('a[href*="profiles/rosaline/"]').forEach(a=>{
     const card=a.closest('.person-card,.character-card,.profile-card,.modern-friend,.card,article,li');
     if(card) card.remove(); else a.remove();
+  });
+});
+
+
+/* Update 31 — Capulet display identity is globally just “Capulet”.
+   Exact display-name replacement only; intentional dialogue such as “Lord C” is untouched. */
+document.addEventListener('DOMContentLoaded',()=>{
+  document.title = document.title.replace(/Lord Capulet/g,'Capulet');
+  document.querySelectorAll('[alt],[title],[aria-label]').forEach(el=>{
+    for (const attr of ['alt','title','aria-label']) {
+      if (el.hasAttribute(attr)) el.setAttribute(attr, el.getAttribute(attr).replace(/Lord Capulet/g,'Capulet'));
+    }
+  });
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+  const nodes=[]; let n; while((n=walker.nextNode())) nodes.push(n);
+  nodes.forEach(node=>{
+    if (node.nodeValue.includes('Lord Capulet')) node.nodeValue=node.nodeValue.replace(/Lord Capulet/g,'Capulet');
   });
 });
